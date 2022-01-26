@@ -1,0 +1,10 @@
+package edu.duke.wh162.battleship;
+
+public class Coordinate {
+  private final int row;
+  private final int col;
+  public int getRow();
+  public int getCol();
+  
+
+}
