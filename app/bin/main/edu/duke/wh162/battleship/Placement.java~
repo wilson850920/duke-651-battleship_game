@@ -1,0 +1,5 @@
+package edu.duke.wh162.battleship;
+
+public class Placement {
+
+}
