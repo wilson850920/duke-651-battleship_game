@@ -40,6 +40,30 @@ public class BoardTextViewTest {
       expectedHeader;
     assertEquals(expected, view.displayMyOwnBoard());
   }
+
+  @Test
+  public void test_display_notempty_3by5() {
+    String e_Header = "  0|1|2\n";
+    String e_body =
+      "A  | |s A\n" +
+      "B  | |  B\n" +
+      "C  |s|  C\n" +
+      "D  | |  D\n" +
+      "E  | |  E\n";
+    //emptyBoardHelper(3, 5, e_Header, e_body);
+
+    Board<Character> b = new BattleShipBoard(3, 5);
+    Coordinate c1 = new Coordinate(0, 2);
+    Coordinate c2 = new Coordinate(2, 1);
+    Ship<Character> s1 = new BasicShip(c1);
+    Ship<Character> s2 = new BasicShip(c2);
+    b.tryAddShip(s1);
+    b.tryAddShip(s2);
+    BoardTextView view = new BoardTextView(b);
+    assertEquals(e_Header + e_body + e_Header, view.displayMyOwnBoard());
+
+
+  }
   
   @Test
   public void test_display_empty_3by5() {

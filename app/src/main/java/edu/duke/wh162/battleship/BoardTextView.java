@@ -36,19 +36,26 @@ public class BoardTextView {
     
     StringBuilder res = new StringBuilder("");
     res.append(makeHeader());
-    
-    for (int r = 0; r <toDisplay.getHeight(); r ++) {
-      char row = (char)(r + 'A');
-      res.append(row + " ");
-      for (int c = 0; c < toDisplay.getWidth(); c++) {
-        if (c == toDisplay.getWidth() - 1) {
+
+    for (int row = 0; row < toDisplay.getHeight(); row ++) {
+      String sep = "";
+      char letter = (char)(row + 'A');
+      res.append(letter + " ");
+      for (int column = 0; column < toDisplay.getWidth(); column ++) {
+        res.append(sep);
+        Coordinate c = new Coordinate(row, column);
+        if(toDisplay.whatIsAt(c) == null){
           res.append(" ");
+          System.out.println("ho: " + toDisplay.whatIsAt(c));
         }
-        else {
-          res.append(" |");
+        else{
+          res.append(toDisplay.whatIsAt(c));
+          System.out.println("hi: " + toDisplay.whatIsAt(c));
         }
+        sep = "|";
       }
-      res.append(" " + row + '\n');
+      res.append(" " + letter + '\n');
+      //letter++;
     }
     res.append(makeHeader());
     return res.toString(); 

@@ -14,8 +14,8 @@ public class BattleShipBoard<T> implements Board<T> {
   private final int height;
   final ArrayList<Ship<T>> myShips;
   
-  public int getWidth(){return this.width;}
-  public int getHeight(){return this.height;}
+  public int getWidth(){return width;}
+  public int getHeight(){return height;}
 
   public BattleShipBoard(int w, int h){
     if (w <= 0) {
