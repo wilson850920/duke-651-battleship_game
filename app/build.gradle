@@ -26,7 +26,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'edu.duke.wh162.battleship.App'
+    mainClassName = 'edu.duke.wh162.battleship.App'
 }
 
 tasks.named('test') {
@@ -38,4 +38,7 @@ test {
         showStandardStreams = true
         exceptionFormat = 'full'
     }
+}
+run{
+   standardInput = System.in
 }

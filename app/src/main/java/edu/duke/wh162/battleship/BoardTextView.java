@@ -46,11 +46,11 @@ public class BoardTextView {
         Coordinate c = new Coordinate(row, column);
         if(toDisplay.whatIsAt(c) == null){
           res.append(" ");
-          System.out.println("ho: " + toDisplay.whatIsAt(c));
+          //System.out.println("ho: " + toDisplay.whatIsAt(c));
         }
         else{
           res.append(toDisplay.whatIsAt(c));
-          System.out.println("hi: " + toDisplay.whatIsAt(c));
+          //System.out.println("hi: " + toDisplay.whatIsAt(c));
         }
         sep = "|";
       }
