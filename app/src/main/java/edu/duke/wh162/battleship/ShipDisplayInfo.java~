@@ -1,0 +1,9 @@
+package edu.duke.wh162.battleship;
+
+/**
+ * @program : battleship
+ * @description: Interface of shipDisplay
+ **/
+public implement ShipDisplayInfo<T> {
+  public T getInfor(Coordinate where, boolean hit);
+}

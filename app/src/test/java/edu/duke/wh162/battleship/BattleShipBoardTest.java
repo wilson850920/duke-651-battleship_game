@@ -20,7 +20,9 @@ public class BattleShipBoardTest {
 
     //check if addship is correct
     Coordinate c = new Coordinate(4, 4);
-    Ship<Character> s = new BasicShip(c);
+    //Ship<Character> s = new BasicShip(c);
+    Ship<Character> s = new RectangleShip<Character>(c, 's', '*');
+    //RectangleShip<Character> s = new RectangleShip<Character>(c, 's', '*');
     assertEquals(true, b.tryAddShip(s));
     assertEquals('s', b.whatIsAt(c));
  
