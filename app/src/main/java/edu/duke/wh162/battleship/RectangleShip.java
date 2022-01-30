@@ -34,13 +34,14 @@ public class RectangleShip<T> extends BasicShip<T>{
   static HashSet<Coordinate> makeCoords(Coordinate upperLeft, int width, int height) {
     HashSet<Coordinate> coordinate_hash = new HashSet<Coordinate>();
     //coordinate_hash.push_back(upperLeft);
-    coordinate_hash.add(upperLeft);
+    //coordinate_hash.add(upperLeft);
     int row = upperLeft.getRow();
     int column = upperLeft.getColumn();
-    for (int k = row + 1; k < row + width; k ++) {
-      for (int i = column + 1; i < column + height; i ++) {
+    for (int k = row; k < row + height; k ++) {
+      for (int i = column; i < column + width; i ++) {
         Coordinate add_coor = new Coordinate(k, i);
         coordinate_hash.add(add_coor);
+        //System.out.print(coordinate_hash);
       }
     }
     return coordinate_hash;

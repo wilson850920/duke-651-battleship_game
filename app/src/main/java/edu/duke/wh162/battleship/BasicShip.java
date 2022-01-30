@@ -1,6 +1,7 @@
 package edu.duke.wh162.battleship;
 
 import java.util.HashMap;
+import java.util.Map;
 
 //public class BasicShip implements Ship<Character> {
 public abstract class BasicShip<T> implements Ship<T> {
@@ -10,15 +11,19 @@ public abstract class BasicShip<T> implements Ship<T> {
   protected ShipDisplayInfo<T> myDisplayInfo;
 
   /**
-  public BasicShip(Coordinate c) {
-    //public BasicShip(Coordinate where) {
-    //this.myLocation = where;
-
-    myPieces = new HashMap<Coordinate, Boolean>();
-    myPieces.put(c, false);
+   * check if c is part of this ship (in myPieces)
+   */
+  protected void checkCoordinateInThisShip(Coordinate c) {
+    int count = 0;
+    //for (int i = 0; i < myPieces.keySet().size(); i ++) {
+    if (myPieces.containsKey(c)) {
+       count += 1;
+    }                        
+    //}
+    if (count == 0) {
+      throw new IllegalArgumentException("the given coordinate is not in the ship!" + c);
+    }
   }
-  */
-  
   /**
    * a constructot which initialize myPieces to have each 
    * Coordinate in where mapped to false. 
@@ -50,26 +55,34 @@ public abstract class BasicShip<T> implements Ship<T> {
   @Override
   public boolean isSunk() {
     // TODO Auto-generated method stub
-    return false;
+    for (Map.Entry<Coordinate, Boolean> temp: myPieces.entrySet()) {
+      if (!temp.getValue()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
   public void recordHitAt(Coordinate where) {
     // TODO Auto-generated method stub
-    
+    checkCoordinateInThisShip(where);
+    myPieces.put(where, true);
   }
 
   @Override
   public boolean wasHitAt(Coordinate where) {
     // TODO Auto-generated method stub
-    return false;
+    checkCoordinateInThisShip(where);
+    return myPieces.get(where);
   }
 
   @Override
   public T getDisplayInfoAt(Coordinate where) {
     // TODO Auto-generated method stub
     // look up the hit status of this coordinate
-    return myDisplayInfo.getInfo(where, false);
+    checkCoordinateInThisShip(where);
+    return myDisplayInfo.getInfo(where, wasHitAt(where));
     //return null;
   }
   
