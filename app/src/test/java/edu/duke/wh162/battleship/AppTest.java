@@ -54,7 +54,7 @@ class AppTest {
     String temp = "  0|1|2\n" +
       "A  | |  A\n" +
       "B  | |  B\n" +
-      "C s| |  C\n" +
+      "C d|d|d C\n" +
       "  0|1|2\n";
     
     app.doOnePlacement();

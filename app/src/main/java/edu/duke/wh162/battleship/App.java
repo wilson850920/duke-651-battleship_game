@@ -15,7 +15,8 @@ public class App {
   private final BoardTextView view;
   private final BufferedReader inputReader;
   private final PrintStream out;
-
+  private final AbstractShipFactory<Character> shipFactory;
+  
   /**
    * A Constructor for the APP
    */
@@ -24,6 +25,7 @@ public class App {
     this.view = new BoardTextView(theBoard);
     this.inputReader = new BufferedReader(inputSource);
     this.out = out;
+    this.shipFactory = new V1ShipFactory();
   }
 
   public Placement readPlacement(String prompt) throws IOException {
@@ -42,7 +44,8 @@ public class App {
   public void doOnePlacement() throws IOException{
     Placement p = readPlacement("Where would you like to put your ship?");
     //Ship<Character> s = new BasicShip(p.getWhere());
-    RectangleShip<Character> s = new RectangleShip<Character>(p.getWhere(), 's', '*');
+    //RectangleShip<Character> s = new RectangleShip<Character>("Submarine", p.getWhere(), 's', '*');
+    Ship<Character> s  = shipFactory.makeDestroyer(p); 
     theBoard.tryAddShip(s);
     out.println(view.displayMyOwnBoard());
   }

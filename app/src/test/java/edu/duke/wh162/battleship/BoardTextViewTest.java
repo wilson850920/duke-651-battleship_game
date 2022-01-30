@@ -57,10 +57,10 @@ public class BoardTextViewTest {
     Coordinate c2 = new Coordinate(2, 1);
     //Ship<Character> s1 = new BasicShip(c1);
     //Ship<Character> s2 = new BasicShip(c2);
-    Ship<Character> s1 = new RectangleShip<Character>(c1, 's', '*');
-    Ship<Character> s2 = new RectangleShip<Character>(c2, 's', '*');
-    //RectangleShip<Character> s1 = new RectangleShip<Character>(c1, 's', '*');
-    //RectangleShip<Character> s2 = new RectangleShip<Character>(c2, 's', '*');
+    //Ship<Character> s1 = new RectangleShip<Character>("submarine", c1, 's', '*');
+    //Ship<Character> s2 = new RectangleShip<Character>("submarine", c2, 's', '*');
+    RectangleShip<Character> s1 = new RectangleShip<Character>("submarine", c1, 's', '*');
+    RectangleShip<Character> s2 = new RectangleShip<Character>("submarine", c2, 's', '*');
     b.tryAddShip(s1);
     b.tryAddShip(s2);
     BoardTextView view = new BoardTextView(b);

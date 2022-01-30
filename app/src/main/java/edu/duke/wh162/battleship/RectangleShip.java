@@ -7,20 +7,26 @@ import java.util.HashSet;
  */
 public class RectangleShip<T> extends BasicShip<T>{
 
+  private final String name;
+  public String getName() {
+    return name;
+  }
+  
   /** 
    * this is the constructor for rectangleship
    */
-  public RectangleShip(Coordinate upperLeft, int width, int height, ShipDisplayInfo<T> a) {
-    super(makeCoords(upperLeft, width, height), a);
+  public RectangleShip(String name, Coordinate upperLeft, int width, int height, ShipDisplayInfo<T> myDisplayInfo) {
+    super(makeCoords(upperLeft, width, height), myDisplayInfo);
+    this.name = name;
     //this(upperLeft, 1, 1, new SimpleShipDisplayInfo<T>(data, onHit));
   }
 
-  public RectangleShip(Coordinate upperLeft, int width, int height, T data, T onHit) {
-    this(upperLeft, width, height, new SimpleShipDisplayInfo<T>(data, onHit));
+  public RectangleShip(String name, Coordinate upperLeft, int width, int height, T data, T onHit) {
+    this(name, upperLeft, width, height, new SimpleShipDisplayInfo<T>(data, onHit));
   }
 
-  public RectangleShip(Coordinate upperLeft, T data, T onHit) {
-    this(upperLeft, 1, 1, new SimpleShipDisplayInfo<T>(data, onHit));
+  public RectangleShip(String name, Coordinate upperLeft, T data, T onHit) {
+    this("testship", upperLeft, 1, 1, new SimpleShipDisplayInfo<T>(data, onHit));
   }
   
   /**
