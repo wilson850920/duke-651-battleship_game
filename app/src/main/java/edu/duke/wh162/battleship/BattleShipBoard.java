@@ -13,6 +13,7 @@ public class BattleShipBoard<T> implements Board<T> {
   private final int width;
   private final int height;
   final ArrayList<Ship<T>> myShips;
+  private final PlacementRuleChecker<T> placementChecker;
   
   public int getWidth(){return width;}
   public int getHeight(){return height;}
@@ -27,6 +28,7 @@ public class BattleShipBoard<T> implements Board<T> {
     this.width = w;
     this.height = h;
     this.myShips = new ArrayList<Ship<T>>();
+    this.placementChecker = new InBoundsRuleChecker<T>(null);
   }
 
   /**

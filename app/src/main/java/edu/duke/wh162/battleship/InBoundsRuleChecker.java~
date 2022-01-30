@@ -1,0 +1,16 @@
+package edu.duke.wh162.battleship;
+
+public class InBoundsRuleChecker<T> extends PlacementRuleChecker<T> {
+  //public abstract class PlacementRuleChecker<T>{
+
+  @Override
+  protected boolean ckeckMyRule(Ship<T> theShip, Board<T> theBoard) {
+    // TODO Auto-generated method stub
+    return false;
+  }
+
+  public InBoundsRuleChecker(PlacementRuleChecker<T> next) {
+    super(next);
+  }
+
+}
