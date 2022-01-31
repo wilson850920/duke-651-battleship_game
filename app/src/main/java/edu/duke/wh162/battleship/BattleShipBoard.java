@@ -28,14 +28,18 @@ public class BattleShipBoard<T> implements Board<T> {
     this.width = w;
     this.height = h;
     this.myShips = new ArrayList<Ship<T>>();
-    this.placementChecker = new InBoundsRuleChecker<T>(null);
+    this.placementChecker = new InBoundsRuleChecker<T>(new NoCollisionRuleChecker<T>(null));
   }
 
   /**
    * Try add ship to check if valid
    */
   public boolean tryAddShip(Ship<T> toAdd){
-    this.myShips.add(toAdd);
+    if (placementChecker.checkPlacement(toAdd, this) == false){
+      //this.myShips.add(toAdd);
+      return false;
+    }
+    this.myShips.add(toAdd);  
     return true;
   }
 

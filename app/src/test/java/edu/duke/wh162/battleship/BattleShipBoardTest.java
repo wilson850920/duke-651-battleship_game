@@ -65,4 +65,22 @@ public class BattleShipBoardTest {
     assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard(10, -5));
     assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard(-8, 20));
   }
+
+  @Test
+  void test_new_addship(){
+    BattleShipBoard<Character> b = new BattleShipBoard<Character>(10, 10);
+    V1ShipFactory sf = new V1ShipFactory();
+    Placement v1 = new Placement(new Coordinate(2, 2), 'V');
+    Ship<Character> s1 = sf.makeSubmarine(v1);
+    //b.tryAddShip(s1);
+
+    Placement h1 = new Placement(new Coordinate(2, 2), 'H');
+    Ship<Character> s2 = sf.makeSubmarine(h1);
+    assertTrue(b.tryAddShip(s1));
+    //b.tryAddShip(s1);
+    //System.out.print("D");
+    assertFalse(b.tryAddShip(s2));
+    
+    
+  }
 }

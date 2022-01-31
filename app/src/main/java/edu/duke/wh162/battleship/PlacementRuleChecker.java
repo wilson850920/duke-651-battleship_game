@@ -22,6 +22,7 @@ public abstract class PlacementRuleChecker<T> {
   public boolean checkPlacement (Ship<T> theShip, Board<T> theBoard) {
     //if we fail our own rule: stop the placement is not legal
     if (!checkMyRule(theShip, theBoard)) {
+      //System.out.print("f");
       return false;
     }
     //other wise, ask the rest of the chain.
