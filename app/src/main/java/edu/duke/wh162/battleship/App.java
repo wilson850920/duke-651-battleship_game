@@ -7,12 +7,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.Reader;
+import java.io.StringReader;
 
 public class App {
 
-  private final TextPlayer p1;
-  private final TextPlayer p2;
+  private  TextPlayer p1;
+  private  TextPlayer p2;
 
   /**
    * Constructor for the two players
@@ -23,7 +23,9 @@ public class App {
   }
 
   public void doPlacementPhase() throws IOException{
-    p1.doOnePlacement();
+    p1.doPlacementPhase();
+    //System.out.print("fuc k");
+    p2.doPlacementPhase();
     //p2.doPlacementPhase();
   }
   //private final Board<Character> theBoard;
@@ -73,16 +75,21 @@ public class App {
     PrintStream out = System.out;
     V1ShipFactory sf = new V1ShipFactory();
 
+    //if(args.length != 0){
+    //  br = new BufferedReader(new StringReader(args[0]));
+    // }
+
+    //TextPlayer p2 = new TextPlayer("B", b2, br, out, sf);
     TextPlayer p1 = new TextPlayer("A", b1, br, out, sf);
     TextPlayer p2 = new TextPlayer("B", b2, br, out, sf);
     App a = new App(p1, p2);
     a.doPlacementPhase();
     //try {
-    //  a.doOnePlacement();
+    //  a.doPlacementPhase();
     //}
-    //catch {
+    //finally {
     //  out.println("Really? Use your brain! Enter something meaningful!");
-    //  a.doOnePlacement();
+    //  a.doPlacementPhase();
     //}
     //Reader r  = new InputStreamReader(System.in);
     //App app = new App(b, r, System.out);
