@@ -125,4 +125,52 @@ public class BoardTextViewTest {
     //make sure we laid things out the way we think we did.
     //assertEquals(myView, view.displayMyOwnBoard());
   }
+
+  @Test
+  public void test_spacecreate() {
+    Board<Character> b = new BattleShipBoard(6, 6, 'X');
+    BoardTextView view = new BoardTextView(b);
+    String s1 = view.createspace(0);
+    String s2 = view.createspace(1);
+
+    assertEquals(null, s1);
+    assertEquals(" ", s2);
+  }
+
+  @Test
+  public void test_twoboarddisply() {
+    String myView =
+      "  0|1|2|3\n" +
+      "A  | |s|s A\n" +
+      "B  | | |  B\n" +
+      "C  | | |  C\n" +
+      "  0|1|2|3\n";
+      String enemyView =
+      "  0|1|2|3\n" +
+      "A d| | |  A\n" +
+      "B d| | |  B\n" +
+      "C d| | |  C\n" +
+        "  0|1|2|3\n";
+
+      Board<Character> b1 = new BattleShipBoard(4, 3, 'X');
+      Board<Character> b2 = new BattleShipBoard(4, 3, 'X');
+      V1ShipFactory sf = new V1ShipFactory();
+      Ship<Character> s1 = sf.makeSubmarine(new Placement("A2H"));
+      Ship<Character> s2 = sf.makeDestroyer(new Placement("A0v"));
+
+      b1.tryAddShip(s1);
+      b2.tryAddShip(s2);
+      BoardTextView v1 = new BoardTextView(b1);
+      BoardTextView v2 = new BoardTextView(b2);
+
+      String expected ="\n"+
+        "     my board                 enemy board\n"+
+   "  0|1|2|3                    0|1|2|3\n"+
+   "A  | |s|s A                A  | | |  A\n"+
+   "B  | | |  B                B  | | |  B\n"+
+   "C  | | |  C                C  | | |  C\n"+
+        "  0|1|2|3                    0|1|2|3\n";
+
+      assertEquals(expected, v1.displayMyBoardWithEnemyNextToIt(v2, "my board", "enemy board"));
+  }
 }

@@ -90,4 +90,56 @@ public class BoardTextView {
     ans.append("\n");
     return ans.toString();
   }
+
+  /**
+   * this function helps us to create all the spaces between the two boards
+   */
+  protected String createspace(int space_num) {
+    if (space_num == 0) {
+      return null;
+    }
+    
+    StringBuilder sb = new StringBuilder();
+    for (int k = 0; k < space_num; k++) {
+      sb.append(" ");
+    }
+    
+    String str = sb.toString();
+    return str;
+  }
+  
+  /**
+   * Put your board on left and the enemy's board on the left
+   */
+  public String displayMyBoardWithEnemyNextToIt(BoardTextView enemyView, String myHeader, String enemyHeader) {
+    //create all the spaces
+    int boardwidth = toDisplay.getWidth();
+    int selfhead = 5; //space in front of the header
+    int selfhead_to_enemyhead = 22 + 2 * boardwidth - myHeader.length() - selfhead; //space between the header
+    //System.out.print(selfhead_to_enemyhead);
+    int spacefor_width = 18; // the space bewteen the display widht
+    int spacefor_body = 16; // the space between the height infor
+
+    StringBuilder sb = new StringBuilder();
+    
+    String begin = createspace(selfhead);
+    String betweenhaeds = createspace(selfhead_to_enemyhead);
+    String widthspace = createspace(spacefor_width);
+    String bodyspace = createspace(spacefor_body);
+    String final_head = String.join("", "\n", begin, myHeader, betweenhaeds, enemyHeader, "\n");
+    sb.append(final_head);
+    
+    String[] myboard = displayMyOwnBoard().split("\n");
+    String[] enemyboard = enemyView.displayEnemyBoard().split("\n");
+    String bodytitle = String.join("", myboard[myboard.length - 1], widthspace, enemyboard[enemyboard.length - 1], "\n");
+    sb.append(bodytitle);
+    
+    for (int k = 1; k < myboard.length - 1; k ++) {
+      String bodyperline = String.join("", myboard[k], bodyspace, enemyboard[k], "\n");
+      sb.append(bodyperline);
+    }
+
+    sb.append(bodytitle);
+    return sb.toString(); 
+  }
 }
