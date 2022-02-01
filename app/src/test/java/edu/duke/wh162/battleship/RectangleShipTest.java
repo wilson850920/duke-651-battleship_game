@@ -29,6 +29,16 @@ public class RectangleShipTest {
     assertTrue(rec_sh.occupiesCoordinates(new Coordinate(5, 7)));
     assertFalse(rec_sh.occupiesCoordinates(new Coordinate(0, 0)));
     assertFalse(rec_sh.occupiesCoordinates(new Coordinate(3, 7)));
+
+    Coordinate c = new Coordinate(5, 6);
+    Coordinate c1 = new Coordinate(6, 7);
+    ShipDisplayInfo<Character> i = new SimpleShipDisplayInfo<Character>('t', 'a');
+    ShipDisplayInfo<Character> i1 = new SimpleShipDisplayInfo<Character>('e', 'x');
+    RectangleShip<Character> s2 = new RectangleShip<Character>("submarine", c, 2, 3, i, i1);
+    assertEquals('t', s2.getDisplayInfoAt(c1, true));
+    assertEquals('e', s2.getDisplayInfoAt(c1, false));     
+
+
   }
 
   @Test
@@ -66,11 +76,11 @@ public class RectangleShipTest {
     Coordinate c2 = new Coordinate(6, 7);
     assertThrows(IllegalArgumentException.class, ()->rs.recordHitAt(c1));
     assertThrows(IllegalArgumentException.class, ()->rs.wasHitAt(c1));
-    assertThrows(IllegalArgumentException.class, ()->rs.getDisplayInfoAt(c1));
+    assertThrows(IllegalArgumentException.class, ()->rs.getDisplayInfoAt(c1, true));
 
     assertThrows(IllegalArgumentException.class, ()->rs.recordHitAt(c2));
     assertThrows(IllegalArgumentException.class, ()->rs.wasHitAt(c2));
-    assertThrows(IllegalArgumentException.class, ()->rs.getDisplayInfoAt(c1));
+    assertThrows(IllegalArgumentException.class, ()->rs.getDisplayInfoAt(c1, true));
     assertEquals("Submarine", rs.getName());
   }
 }

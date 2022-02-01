@@ -27,7 +27,7 @@ public class NoCollisionRuleChecker<T> extends PlacementRuleChecker<T> {
     //System.out.print(iter);
     for (Coordinate c: iter) {
       // System.out.print();
-      if (theBoard.whatIsAt(c) != null) {
+      if (theBoard.whatIsAtForSelf(c) != null) {
         //return false;
 	return "Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.";
       }

@@ -1,5 +1,7 @@
 package edu.duke.wh162.battleship;
 
+import java.util.function.Function;
+
 /**
  * This class handles textual display of a Board (i.e., converting it to a string to show to the user).
  * It supports two ways to display the Board:
@@ -32,7 +34,8 @@ public class BoardTextView {
    * for now it's just printing a blank board
    */
   
-  public String displayMyOwnBoard() {
+  //public String displayMyOwnBoard() {
+  private String displayAnyBoard(Function<Coordinate, Character> getSquareFn) {
     
     StringBuilder res = new StringBuilder("");
     res.append(makeHeader());
@@ -44,12 +47,14 @@ public class BoardTextView {
       for (int column = 0; column < toDisplay.getWidth(); column ++) {
         res.append(sep);
         Coordinate c = new Coordinate(row, column);
-        if(toDisplay.whatIsAt(c) == null){
+        //if(toDisplay.whatIsAtForSelf(c) == null){
+        if(getSquareFn.apply(c) == null) {
           res.append(" ");
           //System.out.println("ho: " + toDisplay.whatIsAt(c));
         }
         else{
-          res.append(toDisplay.whatIsAt(c));
+          //res.append(toDisplay.whatIsAtForSelf(c));
+          res.append(getSquareFn.apply(c));
           //System.out.println("hi: " + toDisplay.whatIsAt(c));
         }
         sep = "|";
@@ -60,13 +65,20 @@ public class BoardTextView {
     res.append(makeHeader());
     return res.toString(); 
   }
+
+  public String displayMyOwnBoard() {
+    return displayAnyBoard((c)->toDisplay.whatIsAtForSelf(c));
+  }
+
+  public String displayEnemyBoard() {
+    return displayAnyBoard((c)->toDisplay.whatIsAtForEnemy(c));
+  }
   
   /** 
    * This makes the header line, e.g. 0|1|2|3|4\n
    * 
    * @return the String that is the header line for the given board
    */
-
   String makeHeader() {
     StringBuilder ans = new StringBuilder("  "); //README shows two spaces at
     String sep = ""; //start with nothing to seperate, then switch to | to seperate

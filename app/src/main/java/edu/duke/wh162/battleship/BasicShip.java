@@ -9,7 +9,7 @@ public abstract class BasicShip<T> implements Ship<T> {
   //private final Coordinate myLocation;
   protected HashMap<Coordinate, Boolean> myPieces;
   protected ShipDisplayInfo<T> myDisplayInfo;
-
+  protected ShipDisplayInfo<T> enemyDisplayInfo;
   /**
    * check if c is part of this ship (in myPieces)
    */
@@ -28,9 +28,10 @@ public abstract class BasicShip<T> implements Ship<T> {
    * a constructot which initialize myPieces to have each 
    * Coordinate in where mapped to false. 
    */
-  public BasicShip(Iterable<Coordinate> where, ShipDisplayInfo<T> myDisplayInfo) {
+  public BasicShip(Iterable<Coordinate> where, ShipDisplayInfo<T> myDisplayInfo, ShipDisplayInfo<T> enemyDisplayInfo) {
     this.myPieces = new HashMap<Coordinate, Boolean>();
     this.myDisplayInfo = myDisplayInfo;
+    this.enemyDisplayInfo = enemyDisplayInfo;
     for (Coordinate c: where){
       myPieces.put(c, false);
     }
@@ -78,12 +79,17 @@ public abstract class BasicShip<T> implements Ship<T> {
   }
 
   @Override
-  public T getDisplayInfoAt(Coordinate where) {
+  public T getDisplayInfoAt(Coordinate where, boolean myShip) {
     // TODO Auto-generated method stub
     // look up the hit status of this coordinate
     checkCoordinateInThisShip(where);
-    return myDisplayInfo.getInfo(where, wasHitAt(where));
+    //return myDisplayInfo.getInfo(where, wasHitAt(where));
     //return null;
+    if (myShip == true) {
+      return myDisplayInfo.getInfo(where, myPieces.get(where));
+    }
+    return  enemyDisplayInfo.getInfo(where, myPieces.get(where));
+
   }
 
   @Override

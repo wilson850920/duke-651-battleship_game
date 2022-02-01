@@ -10,7 +10,7 @@ public class NoCollisionRuleCheckerTest {
   public void test_collide() {
     V1ShipFactory sf = new V1ShipFactory();
     NoCollisionRuleChecker<Character> coll = new NoCollisionRuleChecker<>(null);
-    BattleShipBoard<Character> b = new BattleShipBoard<Character>(10, 20);
+    BattleShipBoard<Character> b = new BattleShipBoard<Character>(10, 20, 'X');
     //PlacementRuleChecker<Character> place = new NoCollisionRuleChecker<Character>(null);
 
     Placement v1 = new Placement(new Coordinate(2, 2), 'V');
@@ -30,7 +30,7 @@ public class NoCollisionRuleCheckerTest {
   void test_inbound_collide() {
     V1ShipFactory sf = new V1ShipFactory();
     NoCollisionRuleChecker<Character> coll = new NoCollisionRuleChecker<>(new InBoundsRuleChecker<Character>(null));
-    BattleShipBoard<Character> b = new BattleShipBoard<Character>(10, 20);
+    BattleShipBoard<Character> b = new BattleShipBoard<Character>(10, 20, 'X');
 
     Placement v1 = new Placement(new Coordinate(2, 2), 'V');
     Ship<Character> s1 = sf.makeBattleship(v1);
