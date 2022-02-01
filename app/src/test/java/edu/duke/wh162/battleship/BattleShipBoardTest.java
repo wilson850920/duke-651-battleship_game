@@ -118,4 +118,21 @@ public class BattleShipBoardTest {
     assertEquals('X', b.whatIsAtForEnemy(c2));
     assertEquals(null, b.whatIsAtForEnemy(c3));
   }
+
+  @Test
+  void test_allshink() {
+    BattleShipBoard<Character> b = new BattleShipBoard<Character>(6, 6, 'X');
+    V1ShipFactory sf = new V1ShipFactory();
+    Placement p1 = new Placement("A0H");
+    //Placement p2 = new Placement("F4H");
+    Ship<Character> s1 = sf.makeSubmarine(p1);
+    b.tryAddShip(s1);
+    b.fireAt(new Coordinate(0, 0));
+
+    assertEquals(false, b.checkshipshinkall());
+    b.fireAt(new Coordinate(0, 1));
+    assertEquals(true, b.checkshipshinkall());
+
+
+  }
 }
