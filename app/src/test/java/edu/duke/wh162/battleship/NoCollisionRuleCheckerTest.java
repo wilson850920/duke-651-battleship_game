@@ -16,14 +16,14 @@ public class NoCollisionRuleCheckerTest {
     Placement v1 = new Placement(new Coordinate(2, 2), 'V');
     Ship<Character> s1 = sf.makeBattleship(v1);
     //b.tryAddShip(s1);
-    assertTrue(coll.checkMyRule(s1, b));
+    assertEquals(null, coll.checkMyRule(s1, b));
     b.tryAddShip(s1);
     
     Placement h1 = new Placement(new Coordinate(2, 2), 'H');
     Ship<Character> s2 = sf.makeBattleship(h1);
     
     //assertTrue(coll.checkMyRule(s1, b));
-    assertFalse(coll.checkMyRule(s2, b));
+    assertEquals("Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.", coll.checkMyRule(s2, b));
   }
 
   @Test
@@ -47,13 +47,13 @@ public class NoCollisionRuleCheckerTest {
     Placement v5 = new Placement(new Coordinate(-1, -10), 'H');
     Ship<Character> s5 = sf.makeBattleship(v5);
     
-    assertTrue(coll.checkMyRule(s1, b));
+    assertEquals(null, coll.checkMyRule(s1, b));
     b.tryAddShip(s1);
-    assertTrue(coll.checkMyRule(s2, b));
+    assertEquals(null, coll.checkMyRule(s2, b));
     b.tryAddShip(s2);
-    assertTrue(coll.checkMyRule(s3, b));
+    assertEquals(null, coll.checkMyRule(s3, b));
     b.tryAddShip(s3);
-    assertFalse(coll.checkMyRule(s4, b));
-    assertFalse(coll.checkPlacement(s5, b));
+    assertEquals("Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.", coll.checkMyRule(s4, b));
+    assertEquals("Your input placement is invalid: the ship exceeds the top of the board.", coll.checkPlacement(s5, b));
   }
 }

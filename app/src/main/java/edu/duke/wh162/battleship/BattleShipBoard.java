@@ -34,13 +34,14 @@ public class BattleShipBoard<T> implements Board<T> {
   /**
    * Try add ship to check if valid
    */
-  public boolean tryAddShip(Ship<T> toAdd){
-    if (placementChecker.checkPlacement(toAdd, this) == false){
+  public String tryAddShip(Ship<T> toAdd){
+    if (placementChecker.checkPlacement(toAdd, this) != null){
       //this.myShips.add(toAdd);
-      return false;
+      return placementChecker.checkPlacement(toAdd, this);
+      //return false;
     }
     this.myShips.add(toAdd);  
-    return true;
+    return null;
   }
 
   /**

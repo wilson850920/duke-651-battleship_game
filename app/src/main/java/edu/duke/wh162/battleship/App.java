@@ -84,13 +84,15 @@ public class App {
     TextPlayer p2 = new TextPlayer("B", b2, br, out, sf);
     App a = new App(p1, p2);
     a.doPlacementPhase();
-    //try {
-    //  a.doPlacementPhase();
-    //}
-    //finally {
-    //  out.println("Really? Use your brain! Enter something meaningful!");
-    //  a.doPlacementPhase();
-    //}
+    /**
+    try {
+      a.doPlacementPhase();
+    }
+    catch(IOException e) {
+      out.println("Error input, please input correct format.");
+      a.doPlacementPhase();
+    }
+    */
     //Reader r  = new InputStreamReader(System.in);
     //App app = new App(b, r, System.out);
     //app.doOnePlacement();

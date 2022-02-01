@@ -23,7 +23,8 @@ public class BattleShipBoardTest {
     //Ship<Character> s = new BasicShip(c);
     //Ship<Character> s = new RectangleShip<Character>("submarine", c, 's', '*');
     RectangleShip<Character> s = new RectangleShip<Character>("Submarine", c, 's', '*');
-    assertEquals(true, b.tryAddShip(s));
+    assertEquals(null, b.tryAddShip(s));
+    //assertEquals(true, b.tryAddShip(s)); 
     assertEquals('s', b.whatIsAt(c));
  
     //whatIsAt out of bound
@@ -76,10 +77,10 @@ public class BattleShipBoardTest {
 
     Placement h1 = new Placement(new Coordinate(2, 2), 'H');
     Ship<Character> s2 = sf.makeSubmarine(h1);
-    assertTrue(b.tryAddShip(s1));
+    assertEquals(null, b.tryAddShip(s1));
     //b.tryAddShip(s1);
     //System.out.print("D");
-    assertFalse(b.tryAddShip(s2));
+    assertEquals("Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.", b.tryAddShip(s2));
     
     
   }

@@ -47,6 +47,11 @@ public class TextPlayerTest {
       // and newline
       bytes.reset(); // clear out bytes for next time around
     }
+    /**
+    TextPlayer p2 = createTextPlayer(10, 20, "", bytes);
+    Placement p = p2.readPlacement(prompt);
+    assertEquals("\nThe input length should be 3, re-enter again:", p);
+    */
   }
 
   @Test

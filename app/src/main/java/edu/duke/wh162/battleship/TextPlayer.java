@@ -55,7 +55,36 @@ public class TextPlayer {
     if (s == null) {
       throw new IOException("Input something!");
     }
-    
+    /**
+    try{
+      while(s.length() != 3){
+        out.println("\nThe input length should be 3, re-enter again:");
+        s = null;
+        s = inputReader.readLine();
+      }
+      HashSet<Character> orRec = new HashSet<Character>();
+      orRec.add('h');
+      orRec.add('H');
+      orRec.add('V');
+      orRec.add('v');
+      while(orRec.contains(s.charAt(2)) == false){
+        out.println("\nYour input orientation is valid, re-enter again:");
+        s = null;
+        s =  inputReader.readLine();
+      }
+      Coordinate c = new Coordinate(s.substring(0, 2));
+    }catch(IllegalArgumentException e) {
+      out.println("\nYour input orientation is not valid, re-enter again:");
+      s = null;
+      s =  inputReader.readLine();
+    }
+    Placement p = new Placement(new Coordinate(s.substring(0, 2)),s.charAt(2));
+    return p;
+    */
+    //PlacementChecker pc = new PlacementChecker(s);
+    //pc.formatCheck("Carriers", "V1");
+    return new Placement(s);
+
     /**
     try {
       while (s.length() != 3) {
@@ -73,7 +102,7 @@ public class TextPlayer {
     */
     //  System.out.print("hello");
     //}
-    return new Placement(s);
+    //return new Placement(s);
   }
 
   //public void doOnePlacement() throws IOException {

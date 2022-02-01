@@ -34,7 +34,7 @@ public class Placement {
   * @return:
   */
   public Placement(String descr) {
-
+   
     if (descr.length() != 3) {
       throw new IllegalArgumentException("The input string should have a length of three.");
     }
@@ -44,7 +44,7 @@ public class Placement {
     if (ori != 'V' && ori != 'H') {
       throw new IllegalArgumentException("The input orientation shoud be either 'v' or 'h'.");
     }
-
+    
     this.orientation = ori;
     this.where = new Coordinate(descr.substring(0,2));
 

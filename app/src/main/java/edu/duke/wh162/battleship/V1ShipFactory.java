@@ -4,10 +4,11 @@ public class V1ShipFactory implements AbstractShipFactory<Character>{
 
   protected Ship<Character> createShip(Placement where, int w, int h, char letter, String name){
     Character char_ori = where.getOrient();
-    if (char_ori != 'H' && char_ori != 'V'){
-      throw new IllegalArgumentException("Please enter a valida orientation");
+    if (char_ori != 'H' && char_ori != 'V' && char_ori != 'v' && char_ori != 'h'){
+      throw new IllegalArgumentException("Please enter a valid orientation");
     }
-    if (where.getOrient() == 'V') {
+    
+    if (where.getOrient() == 'V' || where.getOrient() == 'v') {
       w = w + h;
       h = w - h;
       w = w - h;

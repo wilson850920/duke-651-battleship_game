@@ -21,16 +21,18 @@ public class NoCollisionRuleChecker<T> extends PlacementRuleChecker<T> {
    * return true if the ship can be placed correctly
    */
   @Override
-  public boolean checkMyRule (Ship<T> theShip, Board<T> theBoard) { 
+  //public boolean checkMyRule (Ship<T> theShip, Board<T> theBoard) { 
+  public String checkMyRule (Ship<T> theShip, Board<T> theBoard) { 
     Iterable<Coordinate> iter = theShip.getCoordinates();
     //System.out.print(iter);
     for (Coordinate c: iter) {
       // System.out.print();
       if (theBoard.whatIsAt(c) != null) {
-        return false;
+        //return false;
+	return "Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.";
       }
     }
     //System.out.print(theShip.getCoordinates());
-    return true;
+    return null;
   }
 }
