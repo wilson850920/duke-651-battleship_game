@@ -6,13 +6,11 @@ package edu.duke.wh162.battleship;
  * It has two functions: one is to generate hash code for coordinate, one is to compare
  * two objects are equal coordinate
  */
-
 public class Placement {
 
-   /**
-   * The Coordinate where and orientation in coordinate.
-   */  
-  
+  /**
+  * The Coordinate where and orientation in coordinate.
+  */  
   private final Coordinate where;
   private final char orientation;
 
@@ -34,20 +32,16 @@ public class Placement {
   * @return:
   */
   public Placement(String descr) {
-   
     if (descr.length() != 3) {
       throw new IllegalArgumentException("The input string should have a length of three.");
     }
-
     char ori = descr.charAt(2);
     ori = Character.toUpperCase(ori);
     if (ori != 'V' && ori != 'H') {
       throw new IllegalArgumentException("The input orientation shoud be either 'v' or 'h'.");
     }
-    
     this.orientation = ori;
     this.where = new Coordinate(descr.substring(0,2));
-
   }
   
   /**

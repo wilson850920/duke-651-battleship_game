@@ -11,18 +11,14 @@ public class NoCollisionRuleCheckerTest {
     V1ShipFactory sf = new V1ShipFactory();
     NoCollisionRuleChecker<Character> coll = new NoCollisionRuleChecker<>(null);
     BattleShipBoard<Character> b = new BattleShipBoard<Character>(10, 20, 'X');
-    //PlacementRuleChecker<Character> place = new NoCollisionRuleChecker<Character>(null);
 
     Placement v1 = new Placement(new Coordinate(2, 2), 'V');
     Ship<Character> s1 = sf.makeBattleship(v1);
-    //b.tryAddShip(s1);
     assertEquals(null, coll.checkMyRule(s1, b));
     b.tryAddShip(s1);
     
     Placement h1 = new Placement(new Coordinate(2, 2), 'H');
     Ship<Character> s2 = sf.makeBattleship(h1);
-    
-    //assertTrue(coll.checkMyRule(s1, b));
     assertEquals("Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.", coll.checkMyRule(s2, b));
   }
 

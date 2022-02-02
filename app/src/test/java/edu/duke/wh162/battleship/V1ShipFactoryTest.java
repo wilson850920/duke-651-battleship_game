@@ -59,6 +59,4 @@ public class V1ShipFactoryTest {
       Placement p = new Placement(new Coordinate(0, 0), 'G');
       assertThrows(IllegalArgumentException.class, () -> sf.makeDestroyer(p));
     }
-
-  
 }

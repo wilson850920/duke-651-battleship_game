@@ -7,8 +7,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.StringReader;
 
+/**
+ * This is the class where we start our game
+ * by creating two players and let them start the game
+ * for now it's just only two players
+ * */
 public class App {
 
   private  TextPlayer p1;
@@ -22,51 +26,37 @@ public class App {
     this.p2 = p2;
   }
 
+  /**
+   * state each player the correct placement to do
+   */
   public void doPlacementPhase() throws IOException{
     p1.doPlacementPhase();
-    //System.out.print("fuc k");
-    p2.doPlacementPhase();
-    //p2.doPlacementPhase();
+     p2.doPlacementPhase();
+   }
+
+   /**
+   * Check which player wins the game of lose the game
+   */
+  public void doAttackingPhase() throws IOException {
+    while (true) {
+      p1.playOneTurn(p2.theBoard, p2.getName());
+      if (p2.checkLose() == true) {
+        System.out.println("Congratulations! Player " + p1.getName() + " you win!");
+        break;
+      }
+      p2.playOneTurn(p1.theBoard, p1.getName());
+      if (p1.checkLose() == true) {
+        System.out.println("Congratulations! Player " + p2.getName() + " you win!");
+        break;
+      }
+    }
   }
-  //private final Board<Character> theBoard;
-  //private final BoardTextView view;
-  //private final BufferedReader inputReader;
-  //private final PrintStream out;
-  //private final AbstractShipFactory<Character> shipFactory;
-  //
-  ///**
-  // * A Constructor for the APP
-  // */
-  //public App(Board<Character> theBoard, Reader inputSource, PrintStream out) {
-  //  this.theBoard = theBoard;
-  //  this.view = new BoardTextView(theBoard);
-  //  this.inputReader = new BufferedReader(inputSource);
-  //  this.out = out;
-  //  this.shipFactory = new V1ShipFactory();
-  //}
-
-  //public Placement readPlacement(String prompt) throws IOException {
-  //  out.println(prompt);
-  //  String s = inputReader.readLine();
-  //  return new Placement(s);
-  //}
-
-  ///**
-  // * create a doOnePlacement method which does
-  // * read a PlXoacement
-  // * Create a basic ship based on the location in that Placement
-  // * Add that ship to the Board
-  // * Print out the board (to out, not to System.out)
-  // */
-  //public void doOnePlacement() throws IOException{
-  //  Placement p = readPlacement("Where would you like to put your ship?");
-  //  //Ship<Character> s = new BasicShip(p.getWhere());
-  //  //RectangleShip<Character> s = new RectangleShip<Character>("Submarine", p.getWhere(), 's', '*');
-  //  Ship<Character> s  = shipFactory.makeDestroyer(p); 
-  //  theBoard.tryAddShip(s);
-  //  out.println(view.displayMyOwnBoard());
-  //}
-
+  
+  /**
+   * Main function of the whole program
+   * We will make changes in this part to 
+   * enable different modes of gaming
+   */
   public static void main(String[] args) throws IOException {
     Board<Character> b1 = new BattleShipBoard<Character>(10, 20, 'X');
     Board<Character> b2 = new BattleShipBoard<Character>(10, 20, 'X');
@@ -75,26 +65,10 @@ public class App {
     PrintStream out = System.out;
     V1ShipFactory sf = new V1ShipFactory();
 
-    //if(args.length != 0){
-    //  br = new BufferedReader(new StringReader(args[0]));
-    // }
-
-    //TextPlayer p2 = new TextPlayer("B", b2, br, out, sf);
     TextPlayer p1 = new TextPlayer("A", b1, br, out, sf);
     TextPlayer p2 = new TextPlayer("B", b2, br, out, sf);
     App a = new App(p1, p2);
     a.doPlacementPhase();
-    /**
-    try {
-      a.doPlacementPhase();
-    }
-    catch(IOException e) {
-      out.println("Error input, please input correct format.");
-      a.doPlacementPhase();
-    }
-    */
-    //Reader r  = new InputStreamReader(System.in);
-    //App app = new App(b, r, System.out);
-    //app.doOnePlacement();
+    a.doAttackingPhase();
   }
 }

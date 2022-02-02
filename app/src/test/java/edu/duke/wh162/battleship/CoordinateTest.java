@@ -59,7 +59,16 @@ public class CoordinateTest {
     assertThrows(IllegalArgumentException.class, () -> new Coordinate("A:"));
     assertThrows(IllegalArgumentException.class, () -> new Coordinate("A"));
     assertThrows(IllegalArgumentException.class, () -> new Coordinate("A12"));
-    //assertThrows(IllegalArgumentException.class, () -> new Coordinate("a6")); 
   }
+
+  @Test
+  public void test_validBoundary() {
+    Coordinate c1 = new Coordinate(5, 5);
+    assertFalse(c1.validBoundary(5, 6));
+    assertFalse(c1.validBoundary(6, 5));
+    assertFalse(c1.validBoundary(3, 3));
+    assertTrue(c1.validBoundary(6, 6));
+  }
+
 
 }

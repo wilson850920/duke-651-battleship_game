@@ -9,7 +9,6 @@ import java.util.HashSet;
  * @param h is the height of the newly constructed board.
  * @throws IllegalArgumentException if the width or height are less than or equal to zero.
  */
-
 public class BattleShipBoard<T> implements Board<T> {
   private final int width;
   private final int height;
@@ -18,14 +17,26 @@ public class BattleShipBoard<T> implements Board<T> {
   private HashSet<Coordinate> enemyMisses;
   final T missInfo;
   
+  /**
+   * return the width of the board
+   */
   public int getWidth(){
     return width;
    }
   
+  /**
+   * return the height of the board
+   */
   public int getHeight(){
     return height;
   }
 
+  /**
+   * make the board with the desire input and output
+   * @param w is the width
+   * @param h in the height
+   * throw exception when the input coordinates are wrong or valiate the rules
+   */
   public BattleShipBoard(int w, int h, T missInfo){
     if (w <= 0) {
       throw new IllegalArgumentException("BattleShipBoard's width must be positive but is " + w);
@@ -46,9 +57,7 @@ public class BattleShipBoard<T> implements Board<T> {
    */
   public String tryAddShip(Ship<T> toAdd){
     if (placementChecker.checkPlacement(toAdd, this) != null){
-      //this.myShips.add(toAdd);
       return placementChecker.checkPlacement(toAdd, this);
-      //return false;
     }
     this.myShips.add(toAdd);  
     return null;
@@ -59,20 +68,12 @@ public class BattleShipBoard<T> implements Board<T> {
    */
   //public T whatIsAtForSelf(Coordinate where) {
   public T whatIsAtForSelf(Coordinate where) {
-    // check if the added ship exceeds the board limit
-    //if (where.getColumn() > width - 1 || where.getRow() > height - 1) {
-    //  throw new IllegalArgumentException("the coordinate of this ship exceeds the board size");
-    //}
-    //
-    //for (Ship<T> s: myShips) {
-    //  if (s.occupiesCoordinates(where)) {
-    //    return s.getDisplayInfoAt(where);
-    //  }
-    //}
-    //return null;
     return whatIsAt(where, true);
   }
 
+  /**
+   * get the coordinate and return the information for ypurself or the enemy
+   */
   protected T whatIsAt(Coordinate where, boolean isSelf) {
     if (where.getColumn() > width - 1 || where.getRow() > height - 1) {
       throw new IllegalArgumentException("the coordinate of this ship exceeds the board size");
@@ -83,17 +84,22 @@ public class BattleShipBoard<T> implements Board<T> {
         return s.getDisplayInfoAt(where, isSelf);
       }
     }
-    
     if(isSelf == false && enemyMisses.contains(where)){
       return missInfo;
     }
     return null;
   }
 
+  /**
+   * return the information of a giving coordinate
+   */
   public T whatIsAtForEnemy(Coordinate where) {
     return whatIsAt(where, false);
   }
   
+  /**
+   * attack at the given coodinate and record it
+   */
   public Ship<T> fireAt(Coordinate c) {
     for (Ship<T> s : myShips) {
       if (s.occupiesCoordinates(c)) {
@@ -105,6 +111,9 @@ public class BattleShipBoard<T> implements Board<T> {
     return null;
   }
 
+  /**
+   * check if all the ship for a player was all been hitted
+   */
   public boolean checkshipshinkall() {
     for (Ship<T> s: myShips) {
       if (s.isSunk() == false) {

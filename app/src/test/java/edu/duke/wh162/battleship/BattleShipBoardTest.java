@@ -11,27 +11,18 @@ public class BattleShipBoardTest {
     Character[][] ch = new Character[5][5];
     BattleShipBoard<Character> b = new BattleShipBoard<Character>(5, 5, 'X');
 
-    //check emptiness of the board
     checkWhatIsAtBoard(b, ch);
-
-    //check if the board is not expected as board t
     ch[4][4] = 's';
     assertThrows(IllegalArgumentException.class, () -> checkWhatIsAtBoard(b, ch));
 
-    //check if addship is correct
     Coordinate c = new Coordinate(4, 4);
-    //Ship<Character> s = new BasicShip(c);
-    //Ship<Character> s = new RectangleShip<Character>("submarine", c, 's', '*');
     RectangleShip<Character> s = new RectangleShip<Character>("Submarine", c, 's', '*');
     assertEquals(null, b.tryAddShip(s));
-    //assertEquals(true, b.tryAddShip(s)); 
     assertEquals('s', b.whatIsAtForSelf(c));
  
-    //whatIsAt out of bound
     Coordinate out_b = new Coordinate(10, 10);
     assertThrows(IllegalArgumentException.class, () -> b.whatIsAtForSelf(out_b));
     
-    //whatIsAt null
     Coordinate r = new Coordinate(2, 3);
     assertEquals(null, b.whatIsAtForSelf(r));
   }
@@ -73,28 +64,22 @@ public class BattleShipBoardTest {
     V1ShipFactory sf = new V1ShipFactory();
     Placement v1 = new Placement(new Coordinate(2, 2), 'V');
     Ship<Character> s1 = sf.makeSubmarine(v1);
-    //b.tryAddShip(s1);
 
     Placement h1 = new Placement(new Coordinate(2, 2), 'H');
     Ship<Character> s2 = sf.makeSubmarine(h1);
     assertEquals(null, b.tryAddShip(s1));
-    //b.tryAddShip(s1);
-    //System.out.print("D");
     assertEquals("Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.", b.tryAddShip(s2));    
   }
 
   @Test
   void test_fireAt() {
-    //BattleShipBoard<Character> b = new BattleShipBoard<Character>(8, 8,'X');
     BattleShipBoard<Character> b = new BattleShipBoard<Character>(5, 5, 'X');
     V1ShipFactory sf = new V1ShipFactory();
     Coordinate c1 = new Coordinate(2, 3);
     Coordinate c2 = new Coordinate(2, 4);
     Coordinate c3 = new Coordinate(2, 5);
     Placement h1 = new Placement(c1, 'H');
-    //Placement h2 = new Placement(c2, 'H'); 
     Ship<Character> s1 = sf.makeSubmarine(h1);
-    //Ship<Character> s2 = sf.makeSubmarine(h2);
     b.tryAddShip(s1);
     assertSame(s1, b.fireAt(c1));
     assertEquals(false, s1.isSunk());
@@ -124,7 +109,6 @@ public class BattleShipBoardTest {
     BattleShipBoard<Character> b = new BattleShipBoard<Character>(6, 6, 'X');
     V1ShipFactory sf = new V1ShipFactory();
     Placement p1 = new Placement("A0H");
-    //Placement p2 = new Placement("F4H");
     Ship<Character> s1 = sf.makeSubmarine(p1);
     b.tryAddShip(s1);
     b.fireAt(new Coordinate(0, 0));
@@ -132,7 +116,5 @@ public class BattleShipBoardTest {
     assertEquals(false, b.checkshipshinkall());
     b.fireAt(new Coordinate(0, 1));
     assertEquals(true, b.checkshipshinkall());
-
-
   }
 }

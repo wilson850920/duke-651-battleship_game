@@ -12,19 +12,38 @@ public class RectangleShip<T> extends BasicShip<T>{
     return name;
   }
   
-  /** 
-   * this is the constructor for rectangleship
+
+  /**
+   * Constructs a rectangle ship.
+   * @param upperLeft       is the upperLeft coordinate of the rectangle
+   * @param width           is the width(column) of rectangle
+   * @param height          is the height(row) of rectangle
+   * @param ShipDisplayInfo is the ship info(hit or not)
    */
   public RectangleShip(String name, Coordinate upperLeft, int width, int height, ShipDisplayInfo<T> myDisplayInfo, ShipDisplayInfo<T> enemyDisplayInfo) {
     super(makeCoords(upperLeft, width, height), myDisplayInfo, enemyDisplayInfo);
     this.name = name;
-    //this(upperLeft, 1, 1, new SimpleShipDisplayInfo<T>(data, onHit));
   }
 
+  /**
+   * Constructs a rectangle ship.
+   * @param upperLeft is the upperLeft coordinate of the rectangle
+   * @param width     is the width(column) of rectangle
+   * @param height    is the height(row) of rectangle
+   * @param data      is one of the ship info
+   * @param onHit     is one of the ship info
+   */
   public RectangleShip(String name, Coordinate upperLeft, int width, int height, T data, T onHit) {
     this(name, upperLeft, width, height, new SimpleShipDisplayInfo<T>(data, onHit), new SimpleShipDisplayInfo<T>(null, data));
   }
 
+  /**
+   * Constructs a rectangle ship.
+   * @param upperLeft is the upperLeft coordinate of the rectangle
+   * @param height    is the height(row) of rectangle
+   * @param data      is one of the ship info
+   * @param onHit     is one of the ship info
+   */
   public RectangleShip(String name, Coordinate upperLeft, T data, T onHit) {
     this("testship", upperLeft, 1, 1, new SimpleShipDisplayInfo<T>(data, onHit), new SimpleShipDisplayInfo<T>(null, data));
   }
@@ -39,18 +58,14 @@ public class RectangleShip<T> extends BasicShip<T>{
    */
   static HashSet<Coordinate> makeCoords(Coordinate upperLeft, int width, int height) {
     HashSet<Coordinate> coordinate_hash = new HashSet<Coordinate>();
-    //coordinate_hash.push_back(upperLeft);
-    //coordinate_hash.add(upperLeft);
     int row = upperLeft.getRow();
     int column = upperLeft.getColumn();
     for (int k = row; k < row + height; k ++) {
       for (int i = column; i < column + width; i ++) {
         Coordinate add_coor = new Coordinate(k, i);
         coordinate_hash.add(add_coor);
-        //System.out.print(coordinate_hash);
       }
     }
     return coordinate_hash;
   }
-  
 }

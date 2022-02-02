@@ -27,7 +27,6 @@ public interface AbstractShipFactory<T>{
    * @param where specifies the location and orientation of the ship to make
    * @return the Ship created for the carrier.
    */
-
   public Ship<T> makeCarrier(Placement where);
 
   /**
@@ -36,9 +35,7 @@ public interface AbstractShipFactory<T>{
    * @param where specifies the location and orientation of the ship to make
    * @return the Ship created for the destroyer.
    */
-
   public Ship<T> makeDestroyer(Placement where);
-
 }
 
 

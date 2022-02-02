@@ -40,9 +40,7 @@ public class InBoundsRuleCheckerTest {
     PlacementRuleChecker<Character> p_check = new InBoundsRuleChecker<Character>(null);
     Placement v1_7 = new Placement(new Coordinate(1, 1), 'H');
     Ship<Character> sub7 = sf.makeSubmarine(v1_7);
-    //Ship<Character> sub8 = sf.makeCarrier(v1_7);
     assertEquals(null, p_check.checkPlacement(sub7, b));
     assertEquals("Your input placement is invalid: the ship exceeds the right of the board.", p_check.checkPlacement(sub4, b));
   }
-
 }

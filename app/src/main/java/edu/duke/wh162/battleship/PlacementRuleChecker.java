@@ -17,24 +17,19 @@ public abstract class PlacementRuleChecker<T> {
   /**
    * Check whether the desire ship can be placed on the passed board
    */
-  //protected abstract boolean checkMyRule(Ship<T> theShip, Board<T> theBoard);
   protected abstract String checkMyRule(Ship<T> theShip, Board<T> theBoard);
 
-  //public boolean checkPlacement (Ship<T> theShip, Board<T> theBoard) {
+  /**
+   * check all the rules of placing a ship
+   * if one is wrong, return its error message
+   */
   public String checkPlacement (Ship<T> theShip, Board<T> theBoard) {	  
-    //if we fail our own rule: stop the placement is not legal
-    //if (!checkMyRule(theShip, theBoard)) {
     if (checkMyRule(theShip, theBoard) != null){
-
-      //System.out.print("f");
       return checkMyRule(theShip, theBoard);
     }
-    //other wise, ask the rest of the chain.
     if (next != null) {
       return next.checkPlacement(theShip, theBoard);
     }
-    //if there are no more rules, then the placement is legal
     return null;
   }
-  
 }

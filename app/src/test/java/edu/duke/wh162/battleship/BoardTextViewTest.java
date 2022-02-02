@@ -51,23 +51,15 @@ public class BoardTextViewTest {
       "C  |s|  C\n" +
       "D  | |  D\n" +
       "E  | |  E\n";
-    //emptyBoardHelper(3, 5, e_Header, e_body);
-
     Board<Character> b = new BattleShipBoard(3, 5, 'X');
     Coordinate c1 = new Coordinate(0, 2);
     Coordinate c2 = new Coordinate(2, 1);
-    //Ship<Character> s1 = new BasicShip(c1);
-    //Ship<Character> s2 = new BasicShip(c2);
-    //Ship<Character> s1 = new RectangleShip<Character>("submarine", c1, 's', '*');
-    //Ship<Character> s2 = new RectangleShip<Character>("submarine", c2, 's', '*');
     RectangleShip<Character> s1 = new RectangleShip<Character>("submarine", c1, 's', '*');
     RectangleShip<Character> s2 = new RectangleShip<Character>("submarine", c2, 's', '*');
     b.tryAddShip(s1);
     b.tryAddShip(s2);
     BoardTextView view = new BoardTextView(b);
     assertEquals(e_Header + e_body + e_Header, view.displayMyOwnBoard());
-
-
   }
   
   @Test
@@ -105,7 +97,6 @@ public class BoardTextViewTest {
       "B  | | |  B\n" +
       "C  | | |  C\n" +
       "  0|1|2|3\n";
-    //make sure we laid things out the way we think we did.
     Board<Character> b = new BattleShipBoard(4, 3, 'X');
     Placement p1 = new Placement("B0H");
     Placement p2 = new Placement("A3V");
@@ -122,8 +113,6 @@ public class BoardTextViewTest {
     b.fireAt(mis);
     assertEquals(myView, view.displayMyOwnBoard());
     assertEquals(enemyView, view.displayEnemyBoard());       
-    //make sure we laid things out the way we think we did.
-    //assertEquals(myView, view.displayMyOwnBoard());
   }
 
   @Test

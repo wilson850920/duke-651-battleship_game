@@ -3,27 +3,28 @@ package edu.duke.wh162.battleship;
 import java.util.HashMap;
 import java.util.Map;
 
-//public class BasicShip implements Ship<Character> {
+/**
+ * this class is for all the functions that ship would need
+ */
 public abstract class BasicShip<T> implements Ship<T> {
 
-  //private final Coordinate myLocation;
   protected HashMap<Coordinate, Boolean> myPieces;
   protected ShipDisplayInfo<T> myDisplayInfo;
   protected ShipDisplayInfo<T> enemyDisplayInfo;
+
   /**
    * check if c is part of this ship (in myPieces)
    */
   protected void checkCoordinateInThisShip(Coordinate c) {
     int count = 0;
-    //for (int i = 0; i < myPieces.keySet().size(); i ++) {
     if (myPieces.containsKey(c)) {
        count += 1;
     }                        
-    //}
     if (count == 0) {
       throw new IllegalArgumentException("the given coordinate is not in the ship!" + c);
     }
   }
+
   /**
    * a constructot which initialize myPieces to have each 
    * Coordinate in where mapped to false. 
@@ -35,7 +36,6 @@ public abstract class BasicShip<T> implements Ship<T> {
     for (Coordinate c: where){
       myPieces.put(c, false);
     }
-    //this.myDisplayInfo = myDisplayInfo;
   }
 
   /**
@@ -43,19 +43,19 @@ public abstract class BasicShip<T> implements Ship<T> {
    */
   @Override
   public boolean occupiesCoordinates(Coordinate where) {
-    // TODO Auto-generated method stub
-    
-    //return where.equals(myLocation);
-    
-    if (myPieces.get(where) == null) {
+   if (myPieces.get(where) == null) {
       return false;
     }
     return true;
   }
 
+  /**
+   * check if all the coordinate of a ship was all been hit
+   * if yes, then return true
+   * if not, then return false
+   */
   @Override
   public boolean isSunk() {
-    // TODO Auto-generated method stub
     for (Map.Entry<Coordinate, Boolean> temp: myPieces.entrySet()) {
       if (!temp.getValue()) {
         return false;
@@ -64,27 +64,35 @@ public abstract class BasicShip<T> implements Ship<T> {
     return true;
   }
 
+  /**
+   * Among being hit 
+   * record the coordinate that was hitted
+   */
   @Override
   public void recordHitAt(Coordinate where) {
-    // TODO Auto-generated method stub
     checkCoordinateInThisShip(where);
     myPieces.put(where, true);
   }
 
+  /**
+   * check where was this ship previously been hitted
+   * return the hitted value
+   */
   @Override
   public boolean wasHitAt(Coordinate where) {
-    // TODO Auto-generated method stub
     checkCoordinateInThisShip(where);
     return myPieces.get(where);
   }
 
+  /** 
+   * return a specific information of the ship
+   * @param where is the coordinate to return information for
+   * @throws IllegalArgumentException if where is not part of the Ship
+   * @return The view-specific information at that coordinate.
+   */
   @Override
   public T getDisplayInfoAt(Coordinate where, boolean myShip) {
-    // TODO Auto-generated method stub
-    // look up the hit status of this coordinate
     checkCoordinateInThisShip(where);
-    //return myDisplayInfo.getInfo(where, wasHitAt(where));
-    //return null;
     if (myShip == true) {
       return myDisplayInfo.getInfo(where, myPieces.get(where));
     }
@@ -92,9 +100,11 @@ public abstract class BasicShip<T> implements Ship<T> {
 
   }
 
+  /**
+   * get evey coordinate that this ship occupies
+   */
   @Override
   public Iterable<Coordinate> getCoordinates(){
     return myPieces.keySet();
   }
-
 }
