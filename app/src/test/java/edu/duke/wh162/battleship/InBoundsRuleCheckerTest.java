@@ -22,25 +22,30 @@ public class InBoundsRuleCheckerTest {
     //outbound
     Placement v1_3 = new Placement(new Coordinate(20, 6), 'V');
     Ship<Character> sub3 = sf.makeSubmarine(v1_3);
-    assertEquals("Your input placement is invalid: the ship exceeds the bottom of the board.", check.checkMyRule(sub3, b));
+    //assertEquals("Your input placement is invalid: the ship exceeds the bottom of the board.\n", check.checkMyRule(sub3, b));
+    assertNotNull(check.checkMyRule(sub3, b));
 
     Placement v1_4 = new Placement(new Coordinate(4, 10), 'H');
     Ship<Character> sub4 = sf.makeSubmarine(v1_4);
-    assertEquals("Your input placement is invalid: the ship exceeds the right of the board.", check.checkMyRule(sub4, b));
+    //assertEquals("Your input placement is invalid: the ship exceeds the right of the board.\n", check.checkMyRule(sub4, b));
+    assertNotNull(check.checkMyRule(sub4, b));
 
     Placement v1_5 = new Placement(new Coordinate(-1, 4), 'V');
     Ship<Character> sub5 = sf.makeSubmarine(v1_5);
-    assertEquals("Your input placement is invalid: the ship exceeds the top of the board.", check.checkMyRule(sub5, b));
+    //assertEquals("Your input placement is invalid: the ship exceeds the top of the board.\n", check.checkMyRule(sub5, b));
+    assertNotNull(check.checkMyRule(sub5, b));
 
     Placement v1_6 = new Placement(new Coordinate(2, -11), 'H');
     Ship<Character> sub6 = sf.makeSubmarine(v1_6);
-    assertEquals("Your input placement is invalid: the ship exceeds the left of the board.", check.checkMyRule(sub6, b));
+    //assertEquals("Your input placement is invalid: the ship exceeds the left of the board.\n", check.checkMyRule(sub6, b));
+    assertNotNull(check.checkMyRule(sub6, b));
 
     //check placement
     PlacementRuleChecker<Character> p_check = new InBoundsRuleChecker<Character>(null);
     Placement v1_7 = new Placement(new Coordinate(1, 1), 'H');
     Ship<Character> sub7 = sf.makeSubmarine(v1_7);
     assertEquals(null, p_check.checkPlacement(sub7, b));
-    assertEquals("Your input placement is invalid: the ship exceeds the right of the board.", p_check.checkPlacement(sub4, b));
+    //assertEquals("Your input placement is invalid: the ship exceeds the right of the board.\n", p_check.checkPlacement(sub4, b));
+    assertNotNull(check.checkMyRule(sub4, b));
   }
 }

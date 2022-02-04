@@ -19,26 +19,26 @@ public class Coordinate {
    * constuct a coordinate by a giving string
    */
   public Coordinate(String descr) {
-    if (descr.length() == 0) {
-      throw new IllegalArgumentException("Please enter something\n");
-    }
+    //if (descr.length() == 0) {
+    //  throw new IllegalArgumentException("Please enter something\n");
+    //}
     
     if (descr.length() != 2 && descr.length() != 0) {
-      throw new IllegalArgumentException("The input coordinate must have at least two letters\n");
+      throw new IllegalArgumentException("----------------------------------------------------------\n" + "The input coordinate must have at least two letters\n" + "----------------------------------------------------------\n\n");
     }
 
     char alph = descr.charAt(0);
-    if (alph >= 'a' && alph <= 'z') {
+    if (alph >= 'a' && alph <= 't') {
       alph = Character.toUpperCase(alph);
     }
-    else if (alph < 'A' || alph > 'Z') {
-      throw new IllegalArgumentException("Please enter a char between A to Z, you entered " + alph);
+    else if (alph < 'A' || alph > 'T') {
+      throw new IllegalArgumentException("----------------------------------------------------------\n" + "Please enter a char between A to T, you entered " + alph + "\n----------------------------------------------------------\n\n");
     }
 
     this.row = (int)(alph - 'A');
     char num = descr.charAt(1);
     if (num < '0' || num > '9') {
-      throw new IllegalArgumentException("Plese enteer a char between 0 to 9, you entered " + num);
+      throw new IllegalArgumentException("----------------------------------------------------------\n" + "Plese enter a char between 0 to 9, you entered " + num + "\n----------------------------------------------------------\n\n");
     }
     else {
       int number = (int)(num - '0');

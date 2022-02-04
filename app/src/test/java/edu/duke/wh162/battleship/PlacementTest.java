@@ -8,8 +8,8 @@ public class PlacementTest {
 
   @Test
   public void test_toString() {
-    Placement p1 = new Placement("Z2V");
-    assertEquals("(25, 2), V", p1.toString());
+    Placement p1 = new Placement("T2V");
+    assertEquals("(19, 2), V", p1.toString());
   }
   
   @Test
@@ -19,12 +19,17 @@ public class PlacementTest {
     Placement p2 = new Placement("A1V");
     Placement p3 = new Placement("B5H");
     Placement p4 = new Placement("C9H");
-
+    Placement p5 = new Placement("c9D");
+    Placement p6 = new Placement("C9d");
+    //Placement p7 = new Placement("");
+    
     assertEquals(p1,p2);
     assertEquals(p1,p1);
+    assertEquals(p5, p6);
     assertNotEquals(p1,p3);
     assertNotEquals(p3,p4);
     assertNotEquals(p4,"C9H");
+    assertThrows(IllegalArgumentException.class, () -> new Placement(""));
   }
 
   @Test

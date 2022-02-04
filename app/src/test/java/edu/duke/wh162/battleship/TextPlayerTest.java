@@ -19,7 +19,7 @@ public class TextPlayerTest {
     BufferedReader input = new BufferedReader(new StringReader(inputData));
     PrintStream output = new PrintStream(bytes, true);
     Board<Character> board = new BattleShipBoard<Character>(w, h, 'X');
-    V1ShipFactory shipFactory = new V1ShipFactory();
+    V2ShipFactory shipFactory = new V2ShipFactory();
     return new TextPlayer("A", board, input, output, shipFactory);
   }
   
@@ -45,7 +45,7 @@ public class TextPlayerTest {
   void test_null() throws IOException {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     TextPlayer p1 = createTextPlayer(3, 3, "", bytes);
-    V1ShipFactory sf = new V1ShipFactory();
+    V2ShipFactory sf = new V2ShipFactory();
     assertThrows(IOException.class, ()->p1.doOnePlacement("Carrier", (p)->sf.makeCarrier(p)));
   }
   
@@ -61,8 +61,9 @@ public class TextPlayerTest {
       "  0|1|2";
 
     String expected = "Player A where do you want to place a Destroyer?\n" + temp + '\n';  
-    V1ShipFactory sf = new V1ShipFactory(); 
+    V2ShipFactory sf = new V2ShipFactory(); 
     player.doOnePlacement("Destroyer", (p)->sf.makeDestroyer(p));
     assertEquals(expected,bytes.toString());
   }
 }
+

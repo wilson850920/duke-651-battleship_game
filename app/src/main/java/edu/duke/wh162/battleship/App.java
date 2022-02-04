@@ -30,7 +30,7 @@ public class App {
    * state each player the correct placement to do
    */
   public void doPlacementPhase() throws IOException{
-    p1.doPlacementPhase();
+     p1.doPlacementPhase();
      p2.doPlacementPhase();
    }
 
@@ -41,12 +41,12 @@ public class App {
     while (true) {
       p1.playOneTurn(p2.theBoard, p2.getName());
       if (p2.checkLose() == true) {
-        System.out.println("Congratulations! Player " + p1.getName() + " you win!");
+        System.out.println("----------------------------------------------------------\n" + "Congratulations! Player " + p1.getName() + " you win!");
         break;
       }
       p2.playOneTurn(p1.theBoard, p1.getName());
       if (p1.checkLose() == true) {
-        System.out.println("Congratulations! Player " + p2.getName() + " you win!");
+        System.out.println("----------------------------------------------------------\n" + "Congratulations! Player " + p2.getName() + " you win!");
         break;
       }
     }
@@ -63,7 +63,8 @@ public class App {
     InputStreamReader input = new InputStreamReader(System.in);
     BufferedReader br = new BufferedReader(input);
     PrintStream out = System.out;
-    V1ShipFactory sf = new V1ShipFactory();
+    //V1ShipFactory sf = new V1ShipFactory();
+    V2ShipFactory sf = new V2ShipFactory();
 
     TextPlayer p1 = new TextPlayer("A", b1, br, out, sf);
     TextPlayer p2 = new TextPlayer("B", b2, br, out, sf);

@@ -32,16 +32,21 @@ public class Placement {
   * @return:
   */
   public Placement(String descr) {
-    if (descr.length() != 3) {
-      throw new IllegalArgumentException("The input string should have a length of three.");
+    if (descr.length() == 0) {
+      throw new IllegalArgumentException("----------------------------------------------------------\n" + "Oops, you should enter a placement before hitting the enter.\n" + "----------------------------------------------------------\n");
+    }
+    this.where = new Coordinate(descr.substring(0,2));
+    if (descr.length() != 3 && descr.length() != 0) {
+      throw new IllegalArgumentException("----------------------------------------------------------\n" + "The input string should have a length of three.\n" + "----------------------------------------------------------\n");
     }
     char ori = descr.charAt(2);
     ori = Character.toUpperCase(ori);
-    if (ori != 'V' && ori != 'H') {
-      throw new IllegalArgumentException("The input orientation shoud be either 'v' or 'h'.");
+    //if (ori != 'V' && ori != 'H') {
+    if (ori != 'V' && ori != 'H' && ori != 'D' && ori != 'R' && ori != 'L' && ori != 'U') {  
+      throw new IllegalArgumentException("----------------------------------------------------------\n" + "The input orientation shoud be either 'v', 'h', 'u', 'l', 'r', or 'd'.\n" + "----------------------------------------------------------\n");
     }
     this.orientation = ori;
-    this.where = new Coordinate(descr.substring(0,2));
+    //this.where = new Coordinate(descr.substring(0,2));
   }
   
   /**

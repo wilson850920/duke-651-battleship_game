@@ -41,12 +41,12 @@ public class CoordinateTest {
     Coordinate c3 = new Coordinate("A9");
     assertEquals(0, c3.getRow());
     assertEquals(9, c3.getColumn());
-    Coordinate c4 = new Coordinate("Z0");
-    assertEquals(25, c4.getRow());
+    Coordinate c4 = new Coordinate("E0");
+    assertEquals(4, c4.getRow());
     assertEquals(0, c4.getColumn());
     Coordinate c5 = new Coordinate("a6");
-    assertEquals(25, c4.getRow());
-    assertEquals(0, c4.getColumn());
+    assertEquals(0, c5.getRow());
+    assertEquals(6, c5.getColumn());
   }
   
   @Test

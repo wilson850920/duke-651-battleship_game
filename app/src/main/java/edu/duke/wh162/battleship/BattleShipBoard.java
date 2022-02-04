@@ -1,5 +1,6 @@
 package edu.duke.wh162.battleship;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -16,7 +17,16 @@ public class BattleShipBoard<T> implements Board<T> {
   private final PlacementRuleChecker<T> placementChecker;
   private HashSet<Coordinate> enemyMisses;
   final T missInfo;
-  
+  //private final PrintStream out;
+
+  public String getShipName(Coordinate c) {
+    for (Ship<T> s: myShips) {
+      if (s.occupiesCoordinates(c)) {
+        return s.getName();
+      }
+    }
+    return null;
+  }
   /**
    * return the width of the board
    */
@@ -44,6 +54,7 @@ public class BattleShipBoard<T> implements Board<T> {
     if (h <= 0) {
       throw new IllegalArgumentException("BattleShipBoard's height must be positive but is " + h);
     }
+    //this.out = out; 
     this.missInfo = missInfo;
     this.width = w;
     this.height = h;
@@ -111,6 +122,63 @@ public class BattleShipBoard<T> implements Board<T> {
     return null;
   }
 
+  /**
+   * check what is at the sonar point
+   * if there's a ship, record the coordinate
+   * return the list in occurance of s, d, b, c
+   */
+  //public ArrayList<T> scaned(Coordinate c, int[] arr){
+  //if (whatIsAtForEnemy(c) == 's'){
+      
+  //}
+  
+  /**
+   * by centering the giving coordinate
+   * scan the board surrounding it
+   * return the numbers of each ship
+   */
+  public void scan_area(Coordinate c, Board<Character> enemyBoard) {
+    int row = c.getRow();
+    int column = c.getColumn();
+    int[] arr = {0, 0, 0, 0};
+    PrintStream out = System.out;
+    //int x_ = c.getRow() - 3;
+    //int y_ = c.getColumn() - 3;
+    //int tot = Math.abs(x - x_) + Math.abs(y - y_);
+    for (int i = row - 3; i < row + 4; i ++) {
+      for (int k = column - 3; k < column + 4; k ++) {
+        int tot = Math.abs(row - i) + Math.abs(column - k); 
+        if (tot <= 3) {
+          Coordinate check = new Coordinate(i, k);
+          if (enemyBoard.getShipName(check) == "Submarine"){ 
+            //Coordinate check = new Coordinate(i, k);
+            arr[0] ++;
+          }
+          else if (enemyBoard.getShipName(check) == "Destroyer"){
+            arr[1] ++;
+          }
+          else if (enemyBoard.getShipName(check) == "Battleship"){
+            arr[2] ++;
+          }
+          else if (enemyBoard.getShipName(check) == "Carrier"){
+            arr[3] ++;
+          }
+          else {
+            
+            
+          }
+        }
+      }
+    }
+    String scanresult = "----------------------------------------------------------\n"
+      + "Submarines occupy " + arr[0] + "squares\n"
+      + "Destroyers occupy " + arr[1] + "squares\n"
+      + "BattleShips occupy " + arr[2] + "squares\n"
+      + "Carriers occupy " + arr[3] + "squares\n"
+      + "----------------------------------------------------------\n";
+    out.println(scanresult);
+  }
+  
   /**
    * check if all the ship for a player was all been hitted
    */

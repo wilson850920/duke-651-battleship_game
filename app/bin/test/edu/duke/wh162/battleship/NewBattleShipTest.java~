@@ -1,0 +1,14 @@
+package edu.duke.wh162.battleship;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+public class NewBattleShipTest {
+  @Test
+  public void test_battleconstruct() {
+    
+
+  }
+
+}

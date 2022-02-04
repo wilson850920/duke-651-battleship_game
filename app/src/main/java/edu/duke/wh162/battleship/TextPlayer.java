@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.function.Function;
 
 /**
@@ -26,7 +27,7 @@ public class TextPlayer {
   /**
    * This constrcutor will initialize all the variables
    */
-  public TextPlayer(String name, Board<Character> theBoard, BufferedReader input, PrintStream out, V1ShipFactory sf) {
+  public TextPlayer(String name, Board<Character> theBoard, BufferedReader input, PrintStream out, V2ShipFactory sf) {
     this.name = name;
     this.theBoard = theBoard;
     this.view = new BoardTextView(theBoard);
@@ -52,10 +53,10 @@ public class TextPlayer {
    * create a list of ship that controls how many ship can a player make
    */
   protected void setupShipCreationList(){
-    shipsToPlace.addAll(Collections.nCopies(2, "Submarine"));
-    shipsToPlace.addAll(Collections.nCopies(3, "Destroyer"));
-    shipsToPlace.addAll(Collections.nCopies(3, "Battleship"));
-    shipsToPlace.addAll(Collections.nCopies(2, "Carrier"));
+    shipsToPlace.addAll(Collections.nCopies(1, "Submarine"));
+    shipsToPlace.addAll(Collections.nCopies(1, "Destroyer"));
+    shipsToPlace.addAll(Collections.nCopies(1, "Battleship"));
+    shipsToPlace.addAll(Collections.nCopies(1, "Carrier"));
   }
   
   /**
@@ -76,9 +77,25 @@ public class TextPlayer {
    * @throws IOExceptionif readLine() returns null
    */
   public void doOnePlacement(String shipName, Function<Placement, Ship<Character>> createFn) throws IOException {
-    Placement p = readPlacement("Player " + name + " where do you want to place a " + shipName + "?");
-    Ship<Character> s = createFn.apply(p);
-    theBoard.tryAddShip(s);
+    Boolean check_status = false;
+    Placement p = null;
+    while (check_status == false){
+      try {
+        String tmp;
+        p = readPlacement("Player " + name + " where do you want to place a " + shipName + "?");
+        Ship<Character> s = createFn.apply(p);
+        tmp = theBoard.tryAddShip(s);
+        if (tmp != null) {
+          throw new IllegalArgumentException(tmp);
+        }         
+        if (p != null && tmp == null) {
+          check_status = true;
+        }
+      }
+      catch (IllegalArgumentException illArg) {
+	out.print(illArg.getMessage());
+      }
+    }
     out.print(view.displayMyOwnBoard());
   }
 
@@ -144,21 +161,20 @@ public class TextPlayer {
   }
 
   /**
-   * switch between each player to attack the enemy's board
+   * fire at the a giving coordinate
    */
-  public void playOneTurn(Board<Character> enemyBoard, String enemyName) throws IOException {
+  public void fireaction(Board<Character> enemyBoard, String enemyName) throws IOException {
     setupShipSet();
     String str = null;
     Boolean status = false;
     Coordinate firewhere = null;
+    
+    //String startgame = "\nPlayer " + name + "! Your turn to attack.";
+    //out.println(startgame);
 
-    String startgame = "\nPlayer " + name + "! Your turn to attack.";
-    out.println(startgame);
-
-    String enemyHead = "Player " + enemyName + "'s ocean";
-    BoardTextView viewenemyBoard = new BoardTextView(enemyBoard);
-    out.println(view.displayMyBoardWithEnemyNextToIt(viewenemyBoard, "Your ocean", enemyHead));
-
+    //String enemyHead = "Player " + enemyName + "'s ocean";
+    //BoardTextView viewenemyBoard = new BoardTextView(enemyBoard);
+    //out.println(view.displayMyBoardWithEnemyNextToIt(viewenemyBoard, "Your ocean", enemyHead));
     while (status == false) {
       out.println("Where do you want to attack?");
       str = inputReader.readLine();
@@ -174,5 +190,124 @@ public class TextPlayer {
       }	 
     }
     checkAttachShipInfo(enemyBoard, firewhere);
+  }
+
+  /**
+   * ask the player to input a coordinate
+   * for where to scan
+   */
+  public void scanHere(Board<Character> enemyBoard) throws IOException{
+    String str = null;
+    Boolean status = false;
+    Coordinate scanwhere = null;
+    while (status == false) {
+      out.println("Where do you want to scan?");
+      str = inputReader.readLine();
+      try {
+        scanwhere = new Coordinate(str);
+        status = scanwhere.validBoundary(theBoard.getWidth(), theBoard.getHeight());
+        if (scanwhere.validBoundary(theBoard.getWidth(), theBoard.getHeight()) == false) {
+          out.println("The coordinate fells out of the board");
+        }
+      }
+      catch (IllegalArgumentException illArg) {
+        out.print(illArg.getMessage());
+      }
+    }
+    enemyBoard.scan_area(scanwhere, enemyBoard);
+  }
+
+  /**
+   * pick a coordinate
+   * move the correspnding ship to 
+   * a new giving coordinate
+  public void movewhere() {
+    String str = null;
+    Boolean status = false;
+    Coordinate pickship = null;
+    Coordinate movewhere = null;
+    while (status = false) {
+  */      
+
+    
+
+  
+  
+  /**
+   * switch between each player to attack the enemy's board
+   */
+  public void playOneTurn(Board<Character> enemyBoard, String enemyName) throws IOException {
+    String action0 = null;
+    char action = ' ';
+    String startaction = "----------------------------------------------------------/n" + "Player " + name + ", it's your turn, please choose an action!\n" +
+      "\n F Fire at a square" + "\n M Move a ship tp another square (2 remaining)" +
+      "\n S Sonar scan (1 remaining)\n" + "\nPlayer " + name + ", what would you like to do?\n" + "----------------------------------------------------------/n";
+    out.println(startaction);
+
+    //String startgame = "\nPlayer " + name + "! Your turn to attack.";
+    //out.println(startgame);
+
+    String enemyHead = "Player " + enemyName + "'s ocean";
+    BoardTextView viewenemyBoard = new BoardTextView(enemyBoard);
+    out.println(view.displayMyBoardWithEnemyNextToIt(viewenemyBoard, "Your ocean", enemyHead));
+    
+    boolean action_status = false;
+    while (action_status == false) {
+      //Scanner scanner = new Scanner(System.in);
+      //action = scanner.next().charAt(0); 
+
+      action0 = inputReader.readLine();
+      action = action0.charAt(0);
+      action = Character.toUpperCase(action);
+      if (action == 'F' || action == 'M' || action == 'S') {
+        action_status = true;
+      }
+      else {
+        out.println("Please enter letter F, M, or S.\n");
+      }
+    }
+   
+    if (action == 'F') {
+      fireaction(enemyBoard, enemyName);
+    }
+    if (action == 'S') {
+      scanHere(enemyBoard);
+    }
+    if (action == 'M') {
+      out.println("Move action is coming up, please wait\n");
+      // movewhere();
+    }
+      //enemyBoard.scan_area(null, enemyBoard);
+      
+
+
+
+
+    //setupShipSet();
+    //String str = null;
+    //Boolean status = false;
+    //Coordinate firewhere = null;
+    //
+    //String startgame = "\nPlayer " + name + "! Your turn to attack.";
+    //out.println(startgame);
+
+    //String enemyHead = "Player " + enemyName + "'s ocean";
+    //BoardTextView viewenemyBoard = new BoardTextView(enemyBoard);
+    //out.println(view.displayMyBoardWithEnemyNextToIt(viewenemyBoard, "Your ocean", enemyHead));
+    //while (status == false) {
+    //  out.println("Where do you want to attack?");
+    //  str = inputReader.readLine();
+    //  try {
+    //  	firewhere = new Coordinate(str);
+    //  	status = firewhere.validBoundary(theBoard.getWidth(), theBoard.getHeight());
+    //  	if (firewhere.validBoundary(theBoard.getWidth(), theBoard.getHeight()) == false) {
+    //      out.println("The coordinate fells out of the board");
+    //  	}
+    //  }	
+    //  catch (IllegalArgumentException illArg) {
+    //  	out.print(illArg.getMessage());
+    //  }	 
+    //}
+    //checkAttachShipInfo(enemyBoard, firewhere);
   }
 }
