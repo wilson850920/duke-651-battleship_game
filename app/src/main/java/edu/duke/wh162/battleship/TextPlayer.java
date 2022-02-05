@@ -69,7 +69,7 @@ public class TextPlayer {
     out.println(prompt);
     String s = inputReader.readLine();
     if (s == null) {
-      throw new IOException("Input something!");
+     throw new IOException("Input something!");
     }
     return new Placement(s);
   }
