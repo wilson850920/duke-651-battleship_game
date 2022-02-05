@@ -5,16 +5,16 @@ package edu.duke.wh162.battleship;
  */
 public class InBoundsRuleChecker<T> extends PlacementRuleChecker<T> {
 
+  /**
+   * a constructor that takes in constructs base on its parant constructor
+   */
   public InBoundsRuleChecker(PlacementRuleChecker<T> next) {
     super(next);
   }
 
-  /**
-   * check whether the ship is in the bound of the board
-   * @param theShip is the ship
-   * @param theBoard is the desired board
+  /** 
+   * the string body of the out of bound error message
    */
-
   public String inboundmsg(String str) {
     String err = "----------------------------------------------------------/n"
       + "Your input placement is invalid: the ship exceeds the " + str + " of the board.\n"
@@ -22,6 +22,11 @@ public class InBoundsRuleChecker<T> extends PlacementRuleChecker<T> {
     return err;
   }
   
+  /**
+   * check whether the ship is in the bound of the board
+   * @param theShip is the ship
+   * @param theBoard is the desired board
+   */
   @Override
   protected String checkMyRule(Ship<T> theShip, Board<T> theBoard) {
 
@@ -30,20 +35,15 @@ public class InBoundsRuleChecker<T> extends PlacementRuleChecker<T> {
 
     for (Coordinate c : theShip.getCoordinates()){
       if (c.getRow() < 0) {
-        
-        //return "Your input placement is invalid: the ship exceeds the top of the board.\n";
         return inboundmsg("top");
       }
       if (c.getColumn() < 0) {
-        //return "Your input placement is invalid: the ship exceeds the left of the board.\n";
         return inboundmsg("left");
       }
       if (c.getRow() >= rowbound) {
-        //return "Your input placement is invalid: the ship exceeds the bottom of the board.\n";
         return inboundmsg("bottom");
       }
       if (c.getColumn() >= columnbound) {
-        //return "Your input placement is invalid: the ship exceeds the right of the board.\n";
         return inboundmsg("right");
       }
     }

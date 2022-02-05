@@ -17,13 +17,12 @@ public class Coordinate {
 
   /**
    * constuct a coordinate by a giving string
+   * before passing forward to the adding part
+   * check if the coordinate satisfies all the requirements
+   * @param descr is the input from the user
    */
   public Coordinate(String descr) {
-    //if (descr.length() == 0) {
-    //  throw new IllegalArgumentException("Please enter something\n");
-    //}
-    
-    if (descr.length() != 2 && descr.length() != 0) {
+   if (descr.length() != 2 && descr.length() != 0) {
       throw new IllegalArgumentException("----------------------------------------------------------\n" + "The input coordinate must have at least two letters\n" + "----------------------------------------------------------\n\n");
     }
 

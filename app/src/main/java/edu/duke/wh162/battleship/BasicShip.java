@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * this class is for all the functions that ship would need
+ * BasicShip class is for all the functions that ship would need
+ * it's just a representation of squares
  */
 public abstract class BasicShip<T> implements Ship<T> {
 
@@ -14,6 +15,7 @@ public abstract class BasicShip<T> implements Ship<T> {
 
   /**
    * check if c is part of this ship (in myPieces)
+   * @param Coordinate: check whether this coordinate is in the ship
    */
   protected void checkCoordinateInThisShip(Coordinate c) {
     int count = 0;
@@ -28,6 +30,8 @@ public abstract class BasicShip<T> implements Ship<T> {
   /**
    * a constructot which initialize myPieces to have each 
    * Coordinate in where mapped to false. 
+   * @param Iterable<Coordinate>: an iterator to loop through the coordinates
+   * @param ShipDisplayInfo: both the player's and the enmey's information of the viewing
    */
   public BasicShip(Iterable<Coordinate> where, ShipDisplayInfo<T> myDisplayInfo, ShipDisplayInfo<T> enemyDisplayInfo) {
     this.myPieces = new HashMap<Coordinate, Boolean>();
@@ -40,6 +44,10 @@ public abstract class BasicShip<T> implements Ship<T> {
 
   /**
    * This represent where the ship is
+   * if any single coordinate isn't in the ship, return false
+   * @return return a boolean
+   * true means that this coordinate is occupied
+   * false means this coordinate is not in this ship
    */
   @Override
   public boolean occupiesCoordinates(Coordinate where) {

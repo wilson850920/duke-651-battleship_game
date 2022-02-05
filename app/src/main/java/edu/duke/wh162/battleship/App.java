@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This is the class where we start our game
@@ -29,47 +30,140 @@ public class App {
   /**
    * state each player the correct placement to do
    */
-  public void doPlacementPhase() throws IOException{
-     p1.doPlacementPhase();
-     p2.doPlacementPhase();
+  public void doPlacementPhase(int flag, int flag1) throws IOException{
+     p1.doPlacementPhase(flag);
+     p2.doPlacementPhase(flag1);
    }
 
    /**
    * Check which player wins the game of lose the game
+   * @param flag is to tell that whether it's a player or a computer
    */
-  public void doAttackingPhase() throws IOException {
+  public void doAttackingPhase(int flag, int flag1) throws IOException {
     while (true) {
-      p1.playOneTurn(p2.theBoard, p2.getName());
+      p1.playOneTurn(p2.theBoard, p2.getName(), flag);
       if (p2.checkLose() == true) {
-        System.out.println("----------------------------------------------------------\n" + "Congratulations! Player " + p1.getName() + " you win!");
+        if (p1.getName().equals("ComputerA")){
+          System.out.println("----------------------------------------------------------\n" + "Congratulations! Computer A wins!");
+        }
+        else {
+          System.out.println("----------------------------------------------------------\n" + "Congratulations! Player " + p1.getName() + " you win!");
+        }
         break;
       }
-      p2.playOneTurn(p1.theBoard, p1.getName());
+      p2.playOneTurn(p1.theBoard, p1.getName(), flag1);
       if (p1.checkLose() == true) {
-        System.out.println("----------------------------------------------------------\n" + "Congratulations! Player " + p2.getName() + " you win!");
+        if (p2.getName().equals("ComputerB")){
+          System.out.println("----------------------------------------------------------\n" + "Congratulations! Computer B  wins!");
+        }
+        else {
+           System.out.println("----------------------------------------------------------\n" + "Congratulations! Player " + p2.getName() + " you win!");
+        }
         break;
       }
     }
   }
+
+  /**
+   * Check whether mode does the user wants to play
+   * A. Player A vs. Player B
+   * B. Player A vs Computer B
+   * C. Computer A vs. Player B
+   * D. Computer A vs Computer B
+   * @return the mode chosen by the user
+   */
+  public static String beginning() throws IOException{
+     String mode = "----------------------------------------------------------\n"
+      + "Welcome to the game BattleShip, here you will be setting up a board to fight against another player. Get ready, this will be very intensive.\n"
+      + "First, let's decide which mode do you want to play!\n\n"
+      + "\tA. Player   vs. Player\n "
+      + "\tB. Player   vs. Computer (careful, the computer is hard to beat!)\n"
+      + "\tC. Computer vs. Player   (careful, the computer is hard to beat!)\n"
+      + "\tD. Computer vs. Computer (Well... it doesn't really make sense.)\n\n"
+      + "Please Enter the mode you want to play! Good Luck!\n"
+      + "----------------------------------------------------------\n";
+     System.out.println(mode);
+     Boolean checkmode = false;
+     String str = null;
+     InputStreamReader input = new InputStreamReader(System.in);
+     BufferedReader br = new BufferedReader(input);
+     PrintStream out = System.out;
+
+     while (checkmode == false) {
+       str = br.readLine();
+       if (!str.equals("A") && !str.equals("B") && !str.equals("C") && !str.equals("D") && !str.equals("a") && !str.equals("b") && !str.equals("c") && !str.equals("d")) {
+         System.out.println("Choose a letter from A to D");
+       }
+       else {
+         checkmode = true;
+       }
+     }
+     return str;
+  }
   
   /**
    * Main function of the whole program
-   * We will make changes in this part to 
-   * enable different modes of gaming
+   * A B C D represent the differnet modes of the game
    */
   public static void main(String[] args) throws IOException {
-    Board<Character> b1 = new BattleShipBoard<Character>(10, 20, 'X');
-    Board<Character> b2 = new BattleShipBoard<Character>(10, 20, 'X');
-    InputStreamReader input = new InputStreamReader(System.in);
-    BufferedReader br = new BufferedReader(input);
-    PrintStream out = System.out;
-    //V1ShipFactory sf = new V1ShipFactory();
-    V2ShipFactory sf = new V2ShipFactory();
+    String mode = beginning();
 
-    TextPlayer p1 = new TextPlayer("A", b1, br, out, sf);
-    TextPlayer p2 = new TextPlayer("B", b2, br, out, sf);
-    App a = new App(p1, p2);
-    a.doPlacementPhase();
-    a.doAttackingPhase();
+    if (mode.equals("A") || mode.equals("a")) {
+      Board<Character> b1 = new BattleShipBoard<Character>(10, 20, 'X');
+      Board<Character> b2 = new BattleShipBoard<Character>(10, 20, 'X');
+      InputStreamReader input = new InputStreamReader(System.in);
+      BufferedReader br = new BufferedReader(input);
+      PrintStream out = System.out;
+      V2ShipFactory sf = new V2ShipFactory();
+
+      TextPlayer p1 = new TextPlayer("A", b1, br, out, sf, 0);
+      TextPlayer p2 = new TextPlayer("B", b2, br, out, sf, 0);
+      App a = new App(p1, p2);
+      a.doPlacementPhase(0, 0);
+      a.doAttackingPhase(0, 0);
+    }
+    else if (mode.equals("B") || mode.equals("b")){
+      Board<Character> b1 = new BattleShipBoard<Character>(10, 20, 'X');
+      Board<Character> b2 = new BattleShipBoard<Character>(10, 20, 'X');
+      InputStreamReader input = new InputStreamReader(System.in);
+      BufferedReader br = new BufferedReader(input);
+      PrintStream out = System.out;
+      V2ShipFactory sf = new V2ShipFactory();
+
+      TextPlayer p1 = new TextPlayer("A", b1, br, out, sf, 0);
+      TextPlayer p2 = new TextPlayer("ComputerB", b2, br, out, sf, 1);
+      App a = new App(p1, p2);
+      a.doPlacementPhase(0, 1);
+      a.doAttackingPhase(0, 1);
+    }
+    else if (mode.equals("C") || mode.equals("c")){
+      Board<Character> b1 = new BattleShipBoard<Character>(10, 20, 'X');
+      Board<Character> b2 = new BattleShipBoard<Character>(10, 20, 'X');
+      InputStreamReader input = new InputStreamReader(System.in);
+      BufferedReader br = new BufferedReader(input);
+      PrintStream out = System.out;
+      V2ShipFactory sf = new V2ShipFactory();
+
+      TextPlayer p1 = new TextPlayer("ComputerA", b1, br, out, sf, 1);
+      TextPlayer p2 = new TextPlayer("B", b2, br, out, sf, 0);
+      App a = new App(p1, p2);
+      a.doPlacementPhase(1, 0);
+      a.doAttackingPhase(1, 0);
+
+    }
+    else if (mode.equals("D") || mode.equals("d")){
+      Board<Character> b1 = new BattleShipBoard<Character>(10, 20, 'X');
+      Board<Character> b2 = new BattleShipBoard<Character>(10, 20, 'X');
+      InputStreamReader input = new InputStreamReader(System.in);
+      BufferedReader br = new BufferedReader(input);
+      PrintStream out = System.out;
+      V2ShipFactory sf = new V2ShipFactory();
+
+      TextPlayer p1 = new TextPlayer("ComputerA", b1, br, out, sf, 1);
+      TextPlayer p2 = new TextPlayer("ComputerB", b2, br, out, sf, 1);
+      App a = new App(p1, p2);
+      a.doPlacementPhase(1, 1);
+      a.doAttackingPhase(1, 1);
+    }
   }
 }

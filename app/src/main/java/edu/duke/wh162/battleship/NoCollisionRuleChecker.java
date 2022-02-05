@@ -28,7 +28,6 @@ public class NoCollisionRuleChecker<T> extends PlacementRuleChecker<T> {
         String r = "----------------------------------------------------------\n"
           + "Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.\n"
           + "----------------------------------------------------------\n";
-        // return "Your input placement is invalid: the coordinate you typed in overlaps with one of the existing ships.\n";
         return r;
       }
     }

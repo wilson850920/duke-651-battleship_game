@@ -10,20 +10,14 @@ import java.util.function.Function;
 
 public class BoardTextView {
   
-  /** 
-   * The Board to display
-   */
-
   private final Board<Character> toDisplay;
 
   /** Constructs a BoardView, given the board it will display.
    * @param toDisplay is the Board to display
    * @throws IllegalArgumentException if the board is larger than 10x26
    */
-  
   public BoardTextView(Board<Character> toDisplay){
     this.toDisplay = toDisplay;
-    
     if (toDisplay.getWidth() > 10 || toDisplay.getHeight() > 26) {
       throw new IllegalArgumentException("Board must be no larger than 10x26, but is " + toDisplay.getWidth() + "x" + toDisplay.getHeight());
     }
@@ -33,10 +27,7 @@ public class BoardTextView {
    * Display the board base on the width and height
    * for now it's just printing a blank board
    */
-  
-  //public String displayMyOwnBoard() {
   private String displayAnyBoard(Function<Coordinate, Character> getSquareFn) {
-    
     StringBuilder res = new StringBuilder("");
     res.append(makeHeader());
 
@@ -47,29 +38,32 @@ public class BoardTextView {
       for (int column = 0; column < toDisplay.getWidth(); column ++) {
         res.append(sep);
         Coordinate c = new Coordinate(row, column);
-        //if(toDisplay.whatIsAtForSelf(c) == null){
         if(getSquareFn.apply(c) == null) {
           res.append(" ");
-          //System.out.println("ho: " + toDisplay.whatIsAt(c));
         }
         else{
-          //res.append(toDisplay.whatIsAtForSelf(c));
           res.append(getSquareFn.apply(c));
-          //System.out.println("hi: " + toDisplay.whatIsAt(c));
-        }
+       }
         sep = "|";
       }
       res.append(" " + letter + '\n');
-      //letter++;
     }
     res.append(makeHeader());
     return res.toString(); 
   }
 
+  /**
+   * by all the points on the board
+   * display your board with all the information
+   */
   public String displayMyOwnBoard() {
     return displayAnyBoard((c)->toDisplay.whatIsAtForSelf(c));
   }
 
+  /**
+   * by all the points on the board
+   * display the enemy's board with all the information
+   */
   public String displayEnemyBoard() {
     return displayAnyBoard((c)->toDisplay.whatIsAtForEnemy(c));
   }
@@ -80,8 +74,8 @@ public class BoardTextView {
    * @return the String that is the header line for the given board
    */
   String makeHeader() {
-    StringBuilder ans = new StringBuilder("  "); //README shows two spaces at
-    String sep = ""; //start with nothing to seperate, then switch to | to seperate
+    StringBuilder ans = new StringBuilder("  "); 
+    String sep = ""; 
     for (int i = 0; i < toDisplay.getWidth(); i++) {
       ans.append(sep);
       ans.append(i);
@@ -110,16 +104,17 @@ public class BoardTextView {
   
   /**
    * Put your board on left and the enemy's board on the left
+   * we want to keep the distance between the boards in a fix size
+   * your board starts at column 5
+   * the enemy's board starts at column 2 * W + 19
+   * for more information, please refer to task20.txt
    */
   public String displayMyBoardWithEnemyNextToIt(BoardTextView enemyView, String myHeader, String enemyHeader) {
-    //create all the spaces
     int boardwidth = toDisplay.getWidth();
-    int selfhead = 5; //space in front of the header
-    int selfhead_to_enemyhead = 22 + 2 * boardwidth - myHeader.length() - selfhead; //space between the header
-    //System.out.print(selfhead_to_enemyhead);
-    int spacefor_width = 18; // the space bewteen the display widht
-    int spacefor_body = 16; // the space between the height infor
-
+    int selfhead = 5; 
+    int selfhead_to_enemyhead = 22 + 2 * boardwidth - myHeader.length() - selfhead; 
+    int spacefor_width = 18; 
+    int spacefor_body = 16; 
     StringBuilder sb = new StringBuilder();
     
     String begin = createspace(selfhead);
@@ -138,7 +133,6 @@ public class BoardTextView {
       String bodyperline = String.join("", myboard[k], bodyspace, enemyboard[k], "\n");
       sb.append(bodyperline);
     }
-
     sb.append(bodytitle);
     return sb.toString(); 
   }

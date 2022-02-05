@@ -17,8 +17,11 @@ public class BattleShipBoard<T> implements Board<T> {
   private final PlacementRuleChecker<T> placementChecker;
   private HashSet<Coordinate> enemyMisses;
   final T missInfo;
-  //private final PrintStream out;
 
+  /**
+   * by a giving coordinate, return the corresonding ship name
+   * if nothing were found, return null
+   */
   public String getShipName(Coordinate c) {
     for (Ship<T> s: myShips) {
       if (s.occupiesCoordinates(c)) {
@@ -27,6 +30,7 @@ public class BattleShipBoard<T> implements Board<T> {
     }
     return null;
   }
+
   /**
    * return the width of the board
    */
@@ -54,7 +58,6 @@ public class BattleShipBoard<T> implements Board<T> {
     if (h <= 0) {
       throw new IllegalArgumentException("BattleShipBoard's height must be positive but is " + h);
     }
-    //this.out = out; 
     this.missInfo = missInfo;
     this.width = w;
     this.height = h;
@@ -65,6 +68,8 @@ public class BattleShipBoard<T> implements Board<T> {
 
   /**
    * Try add ship to check if valid
+   * @param toAdd is the ship ready to be added to the board
+   * before adding the ship, we do some checking first to make sure this adding works properly
    */
   public String tryAddShip(Ship<T> toAdd){
     if (placementChecker.checkPlacement(toAdd, this) != null){
@@ -77,13 +82,14 @@ public class BattleShipBoard<T> implements Board<T> {
   /**
    * check if there's something at the coordinate want to add
    */
-  //public T whatIsAtForSelf(Coordinate where) {
   public T whatIsAtForSelf(Coordinate where) {
     return whatIsAt(where, true);
   }
 
   /**
-   * get the coordinate and return the information for ypurself or the enemy
+   * by any giving coordinate
+   * return the ship occupied at this point
+   * in this game, it could be 's', 'd', 'b' 'c', 'X', '*', or null
    */
   protected T whatIsAt(Coordinate where, boolean isSelf) {
     if (where.getColumn() > width - 1 || where.getRow() > height - 1) {
@@ -123,16 +129,6 @@ public class BattleShipBoard<T> implements Board<T> {
   }
 
   /**
-   * check what is at the sonar point
-   * if there's a ship, record the coordinate
-   * return the list in occurance of s, d, b, c
-   */
-  //public ArrayList<T> scaned(Coordinate c, int[] arr){
-  //if (whatIsAtForEnemy(c) == 's'){
-      
-  //}
-  
-  /**
    * by centering the giving coordinate
    * scan the board surrounding it
    * return the numbers of each ship
@@ -142,16 +138,12 @@ public class BattleShipBoard<T> implements Board<T> {
     int column = c.getColumn();
     int[] arr = {0, 0, 0, 0};
     PrintStream out = System.out;
-    //int x_ = c.getRow() - 3;
-    //int y_ = c.getColumn() - 3;
-    //int tot = Math.abs(x - x_) + Math.abs(y - y_);
     for (int i = row - 3; i < row + 4; i ++) {
       for (int k = column - 3; k < column + 4; k ++) {
         int tot = Math.abs(row - i) + Math.abs(column - k); 
         if (tot <= 3) {
           Coordinate check = new Coordinate(i, k);
           if (enemyBoard.getShipName(check) == "Submarine"){ 
-            //Coordinate check = new Coordinate(i, k);
             arr[0] ++;
           }
           else if (enemyBoard.getShipName(check) == "Destroyer"){
@@ -164,8 +156,6 @@ public class BattleShipBoard<T> implements Board<T> {
             arr[3] ++;
           }
           else {
-            
-            
           }
         }
       }

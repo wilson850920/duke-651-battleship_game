@@ -35,18 +35,16 @@ public class Placement {
     if (descr.length() == 0) {
       throw new IllegalArgumentException("----------------------------------------------------------\n" + "Oops, you should enter a placement before hitting the enter.\n" + "----------------------------------------------------------\n");
     }
-    this.where = new Coordinate(descr.substring(0,2));
     if (descr.length() != 3 && descr.length() != 0) {
       throw new IllegalArgumentException("----------------------------------------------------------\n" + "The input string should have a length of three.\n" + "----------------------------------------------------------\n");
     }
+    this.where = new Coordinate(descr.substring(0, 2));
     char ori = descr.charAt(2);
     ori = Character.toUpperCase(ori);
-    //if (ori != 'V' && ori != 'H') {
     if (ori != 'V' && ori != 'H' && ori != 'D' && ori != 'R' && ori != 'L' && ori != 'U') {  
       throw new IllegalArgumentException("----------------------------------------------------------\n" + "The input orientation shoud be either 'v', 'h', 'u', 'l', 'r', or 'd'.\n" + "----------------------------------------------------------\n");
     }
     this.orientation = ori;
-    //this.where = new Coordinate(descr.substring(0,2));
   }
   
   /**
